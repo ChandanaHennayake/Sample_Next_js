@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+  --indigo: #6366f1;
+  --indigo-light: #818cf8;
+  --indigo-muted: rgba(99, 102, 241, 0.12);
+  --surface: #1a1d27;
+  --surface-2: #22263a;
+  --border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #4b5563;
+  --danger: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter);
+}
+
+/* Signature: animated left-border glow on tool cards */
+.tool-card {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.tool-card:hover::before {
+  opacity: 1;
+}
+
+.tool-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15), 0 1px 0 rgba(255,255,255,0.04) inset;
+}
+
+.tool-card .card-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 12px 0 0 12px;
+  background: linear-gradient(180deg, #6366f1, #818cf8);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.25s ease;
+}
+
+.tool-card:hover .card-accent {
+  transform: scaleY(1);
+}
+
+/* ── Age Calculator ── */
+.age-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f1117;
+  padding: 2rem 1rem;
+}
+
+.age-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem 2rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.age-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--indigo-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 24px;
+}
+
+.age-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0 0 0.375rem;
+}
+
+.age-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.year-input {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: var(--font-inter);
+  color: var(--text-primary);
+  text-align: center;
+  letter-spacing: 0.05em;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -moz-appearance: textfield;
+}
+
+.year-input::-webkit-outer-spin-button,
+.year-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.year-input::placeholder {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.year-input:focus {
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px var(--indigo-muted);
+}
+
+.error-msg {
+  font-size: 0.75rem;
+  color: var(--danger);
+  min-height: 1.25rem;
+  margin: 0.375rem 0 0;
+}
+
+.calc-btn {
+  margin-top: 1.25rem;
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--indigo);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: var(--font-inter);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  letter-spacing: 0.02em;
+}
+
+.calc-btn:hover {
+  opacity: 0.88;
+}
+
+.calc-btn:active {
+  transform: scale(0.98);
+}
+
+.calc-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Result */
+.result-area {
+  margin-top: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.big-age {
+  text-align: center;
+}
+
+.big-age-num {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.big-age-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+}
+
+.stat-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.875rem 0.5rem;
+  text-align: center;
+}
+
+.stat-val {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bday-row {
+  background: var(--indigo-muted);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--indigo-light);
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-card,
+  .tool-card::before,
+  .tool-card .card-accent,
+  .result-area {
+    transition: none;
+    transform: none;
+    animation: none;
+  }
+}
+
+
+/* Add this to your existing globals.css */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.3s ease forwards;
+}
