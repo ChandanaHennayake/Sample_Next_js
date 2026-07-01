@@ -13,6 +13,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://unitnov.com"),
 
+verification: {
+    google: "zhoBvdPxnO40PvyFYHCl6tAdGbNFVFhufW-ZpwKgy_A",
+  },
+
   title: {
     default: "UnitNov - Free Online Calculators & Tools",
     template: "%s | UnitNov",
