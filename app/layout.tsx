@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import "./globals.css";
@@ -13,7 +14,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://unitnov.com"),
 
-verification: {
+  // Google Search Console verification
+  verification: {
     google: "zhoBvdPxnO40PvyFYHCl6tAdGbNFVFhufW-ZpwKgy_A",
   },
 
@@ -51,7 +53,6 @@ verification: {
   ],
 
   creator: "UnitNov",
-
   publisher: "UnitNov",
 
   alternates: {
@@ -61,6 +62,7 @@ verification: {
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -75,24 +77,30 @@ verification: {
     locale: "en_US",
     url: "https://unitnov.com",
     siteName: "UnitNov",
+
     title: "UnitNov - Free Online Calculators & Tools",
+
     description:
       "Free online calculators for finance, health, math, dates, percentages, conversions and more.",
+
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "UnitNov",
+        alt: "UnitNov - Free Online Calculators & Tools",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
+
     title: "UnitNov - Free Online Calculators & Tools",
+
     description:
       "Free online calculators and productivity tools.",
+
     images: ["/og-image.png"],
   },
 
@@ -112,10 +120,15 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="bg-[#0F1117] text-slate-100 antialiased font-sans">
         <Header />
+
         <main className="max-w-5xl mx-auto px-6 py-10">
           {children}
         </main>
+
         <Footer />
+
+        {/* Google Analytics */}
+        <GoogleAnalytics gaId="G-QJYN3G8M00" />
       </body>
     </html>
   );
