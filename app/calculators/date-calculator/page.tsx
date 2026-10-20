@@ -1,193 +1,164 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import DateCalculatorClient from "./DateCalculatorClient";
+import AdSlot from "@/src/components/AdSlot";
+import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
-import { useState } from 'react';
+export const metadata: Metadata = {
+  title: "Date Calculator - Days Between Dates & Business Days | UnitNov",
+  description:
+    "Calculate the exact number of days, weeks, and business days between two dates. Add or subtract days from any date with our free online calendar tool.",
+  keywords: [
+    "date calculator",
+    "days between dates",
+    "business days calculator",
+    "working days calculator",
+    "add days to date",
+    "calendar calculator",
+  ],
+  alternates: {
+    canonical: "https://unitnov.com/calculators/date-calculator",
+  },
+  openGraph: {
+    title: "Date Calculator - Calculate Days Between Dates & Business Days",
+    description: "Calculate duration, weekdays, and target dates quickly and accurately.",
+    url: "https://unitnov.com/calculators/date-calculator",
+  },
+};
 
-interface DateResult {
-  days: number;
-  weeks: number;
-  months: number;
-}
+export default function DateCalculatorPage() {
+  const faqs: FAQItem[] = [
+    {
+      question: "How does the calculator determine business days?",
+      answer:
+        "Business days count Monday through Friday between your selected start and end dates, excluding Saturdays and Sundays. It provides an accurate representation of working days for project planning, shipping estimates, and employment contracts.",
+    },
+    {
+      question: "Does the date difference include the start or end date?",
+      answer:
+        "By standard calendar convention, this tool calculates the total elapsed duration (end date minus start date). If you want to include both the first and last day inclusively, simply add 1 day to the final count.",
+    },
+    {
+      question: "How does the tool handle leap years?",
+      answer:
+        "All calculations use full Gregorian calendar math that automatically accounts for February 29th leap days across past, present, and future centuries.",
+    },
+  ];
 
-export default function DateCalculator() {
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
-
-  const [result, setResult] = useState<DateResult | null>(null);
-  const [error, setError] = useState('');
-
-  const calculate = () => {
-    setError('');
-    setResult(null);
-
-    if (!start || !end) {
-      setError('Please select both dates.');
-      return;
-    }
-
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-
-    const diffMs =
-      endDate.getTime() - startDate.getTime();
-
-    const diffDays = Math.round(
-      diffMs / (1000 * 60 * 60 * 24)
-    );
-
-    if (diffDays < 0) {
-      setError('End date must be after start date.');
-      return;
-    }
-
-    setResult({
-      days: diffDays,
-      weeks: Math.floor(diffDays / 7),
-      months: Math.floor(diffDays / 30.44),
-    });
-  };
-
-  const clearResult = () => {
-    setError('');
-    if (result) setResult(null);
+  const appSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "UnitNov Date Calculator",
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    description:
+      "Free online date calculator to compute days between dates, working business days, and add or subtract days.",
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f1117] px-4 py-12">
-      <div className="w-full max-w-md bg-[#1a1d27] border border-white/10 rounded-2xl p-8">
+    <div className="py-4">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
 
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-2xl mx-auto mb-5">
-          📅
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <Link href="/" className="hover:text-white transition-colors">
+          Home
+        </Link>
+        <span>/</span>
+        <Link href="/calculators" className="hover:text-white transition-colors">
+          Calculators
+        </Link>
+        <span>/</span>
+        <span className="text-slate-200 font-medium">Date Calculator</span>
+      </nav>
+
+      {/* Header */}
+      <div className="mb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
+          <span>📅</span> Time & Calendar
         </div>
-
-        <h1 className="text-xl font-semibold text-white text-center mb-1">
+        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
           Date Calculator
         </h1>
-
-        <p className="text-sm text-slate-400 text-center mb-7">
-          Calculate the difference between two dates
+        <p className="text-slate-400 text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+          Count days and business working days between two calendar dates, or add and subtract days to find a target future or past date.
         </p>
-
-        {/* Start Date */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Start Date
-        </label>
-
-        <input
-          type="date"
-          value={start}
-          onChange={(e) => {
-            setStart(e.target.value);
-            clearResult();
-          }}
-          className="
-            w-full bg-[#22263a] border border-white/10 rounded-xl
-            px-4 py-3.5 text-white
-            outline-none focus:border-indigo-500
-            focus:ring-2 focus:ring-indigo-500/20
-            transition-all mb-4
-          "
-        />
-
-        {/* End Date */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          End Date
-        </label>
-
-        <input
-          type="date"
-          value={end}
-          onChange={(e) => {
-            setEnd(e.target.value);
-            clearResult();
-          }}
-          className="
-            w-full bg-[#22263a] border border-white/10 rounded-xl
-            px-4 py-3.5 text-white
-            outline-none focus:border-indigo-500
-            focus:ring-2 focus:ring-indigo-500/20
-            transition-all
-          "
-        />
-
-        {/* Error */}
-        <p
-          role="alert"
-          className="text-xs text-red-400 mt-2 min-h-[1.25rem]"
-        >
-          {error}
-        </p>
-
-        {/* Button */}
-        <button
-          onClick={calculate}
-          className="
-            mt-4 w-full bg-indigo-600 hover:bg-indigo-500
-            active:scale-[0.98]
-            text-white font-semibold text-[15px]
-            rounded-xl py-3.5 transition-all duration-150
-            cursor-pointer border-none
-          "
-        >
-          Calculate Difference
-        </button>
-
-        {/* Results */}
-        {result && (
-          <div className="mt-7 pt-7 border-t border-white/10 flex flex-col gap-4 animate-fade-up">
-
-            <div className="text-center">
-              <div className="text-7xl font-bold text-white tracking-tight leading-none">
-                {result.days.toLocaleString()}
-              </div>
-
-              <div className="text-sm text-slate-400 mt-1">
-                days
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2.5">
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-sm font-semibold text-white">
-                  {new Date(start).toLocaleDateString()}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  Start
-                </div>
-              </div>
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-sm font-semibold text-white">
-                  {new Date(end).toLocaleDateString()}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  End
-                </div>
-              </div>
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  {result.weeks}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  Weeks
-                </div>
-              </div>
-
-            </div>
-
-            <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-4 py-3 text-sm text-indigo-300 flex items-center gap-2">
-              ⏳ Approximately {result.months} month
-              {result.months !== 1 ? 's' : ''} between these dates
-            </div>
-
-          </div>
-        )}
       </div>
+
+      {/* Top Ad Slot */}
+      <AdSlot label="Advertisement" format="horizontal" />
+
+      {/* Calculator Client */}
+      <DateCalculatorClient />
+
+      {/* SEO Content Section */}
+      <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Common Calendar & Date Calculations
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <h3 className="font-bold text-white text-base">Calendar Duration vs Working Days</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Total calendar days represent the literal chronological elapsed time (24 hours per day). Working business days filter out Saturdays and Sundays, which is essential for invoice payment terms (e.g., Net 30), legal deadlines, and delivery schedules.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-bold text-white text-base">Date Offsets & Deadlines</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Adding or subtracting a fixed number of days to a starting date helps determine visa expiration dates, warranty durations, project milestone deadlines, and event countdowns without tedious manual calendar counting.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Second Ad Slot */}
+        <AdSlot label="Sponsored Content" format="horizontal" />
+
+        {/* FAQs */}
+        <FAQAccordion items={faqs} />
+
+        {/* Related Tools */}
+        <section className="pt-8 border-t border-white/[0.08]">
+          <h3 className="text-lg font-bold text-white mb-4">Related Utilities</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              href="/calculators/age-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">🎂</span>
+              <h4 className="font-semibold text-white text-sm">Age Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate exact age in years, months, and days.</p>
+            </Link>
+            <Link
+              href="/calculators/percentage-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">📊</span>
+              <h4 className="font-semibold text-white text-sm">Percentage Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate percentage differences and changes.</p>
+            </Link>
+            <Link
+              href="/calculators/discount-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">🏷️</span>
+              <h4 className="font-semibold text-white text-sm">Discount Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate sale prices and shopping discounts.</p>
+            </Link>
+          </div>
+        </section>
+      </article>
     </div>
   );
 }

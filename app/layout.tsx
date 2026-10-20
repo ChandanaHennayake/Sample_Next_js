@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
+import CommandPalette from "@/src/components/CommandPalette";
+import { ToastProvider } from "@/src/components/Toast";
 import "./globals.css";
 
 const inter = Inter({
@@ -119,16 +122,30 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="bg-[#0F1117] text-slate-100 antialiased font-sans">
-        <Header />
+        <ToastProvider>
+          <Header />
 
-        <main className="max-w-5xl mx-auto px-6 py-10">
-          {children}
-        </main>
+          <main className="max-w-6xl mx-auto px-6 py-8">
+            {children}
+          </main>
 
-        <Footer />
+          <Footer />
+          <CommandPalette />
+        </ToastProvider>
 
         {/* Google Analytics */}
         <GoogleAnalytics gaId="G-QJYN3G8M00" />
+
+        {/* Google AdSense (Enabled when NEXT_PUBLIC_ADSENSE_CLIENT is set in Vercel) */}
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+          <Script
+            id="google-adsense"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );

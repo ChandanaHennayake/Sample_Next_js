@@ -1,243 +1,181 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import UnitConverterClient from "./UnitConverterClient";
+import AdSlot from "@/src/components/AdSlot";
+import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
-import { useState, KeyboardEvent } from 'react';
-
-interface ConversionResult {
-  value: number;
-  from: string;
-  to: string;
-}
-
-const conversions = {
-  'km-miles': {
-    label: 'Kilometers → Miles',
-    from: 'KM',
-    to: 'Miles',
-    convert: (n: number) => n * 0.621371,
+export const metadata: Metadata = {
+  title: "Unit Converter - Metric to Imperial Conversion | UnitNov",
+  description:
+    "Free online unit converter. Convert length, weight, volume, speed, and temperature between metric and imperial units with instant accuracy.",
+  keywords: [
+    "unit converter",
+    "metric to imperial converter",
+    "kg to lbs converter",
+    "cm to inches converter",
+    "celsius to fahrenheit",
+    "measurement converter",
+  ],
+  alternates: {
+    canonical: "https://unitnov.com/calculators/unit-converter",
   },
-  'miles-km': {
-    label: 'Miles → Kilometers',
-    from: 'Miles',
-    to: 'KM',
-    convert: (n: number) => n * 1.60934,
+  openGraph: {
+    title: "Unit Converter - Fast Metric & Imperial Conversions",
+    description: "Convert length, weight, temperature, volume, and speed units instantly.",
+    url: "https://unitnov.com/calculators/unit-converter",
   },
-  'kg-lbs': {
-    label: 'Kilograms → Pounds',
-    from: 'KG',
-    to: 'LBS',
-    convert: (n: number) => n * 2.20462,
-  },
-  'lbs-kg': {
-    label: 'Pounds → Kilograms',
-    from: 'LBS',
-    to: 'KG',
-    convert: (n: number) => n * 0.453592,
-  },
-  'c-f': {
-    label: 'Celsius → Fahrenheit',
-    from: '°C',
-    to: '°F',
-    convert: (n: number) => (n * 9) / 5 + 32,
-  },
-  'f-c': {
-    label: 'Fahrenheit → Celsius',
-    from: '°F',
-    to: '°C',
-    convert: (n: number) => ((n - 32) * 5) / 9,
-  },
-} as const;
+};
 
-export default function UnitConverter() {
-  const [value, setValue] = useState('');
-  const [conversion, setConversion] =
-    useState<keyof typeof conversions>('km-miles');
+export default function UnitConverterPage() {
+  const faqs: FAQItem[] = [
+    {
+      question: "How do you convert kilograms to pounds?",
+      answer:
+        "1 kilogram is equal to approximately 2.20462 pounds. To convert kilograms to pounds, multiply your weight in kg by 2.20462. For example, 70 kg × 2.20462 = 154.32 lbs.",
+    },
+    {
+      question: "How do you convert Celsius to Fahrenheit?",
+      answer:
+        "The formula to convert Celsius to Fahrenheit is: °F = (°C × 9/5) + 32. For example, 20°C converts to (20 × 1.8) + 32 = 68°F.",
+    },
+    {
+      question: "How many inches are in a centimeter?",
+      answer:
+        "1 inch is legally defined as exactly 2.54 centimeters. Therefore, 1 centimeter is equal to approximately 0.3937 inches.",
+    },
+    {
+      question: "What is the difference between metric and imperial systems?",
+      answer:
+        "The Metric system is a decimal-based system used globally (meters, grams, liters) with factors of 10. The Imperial/US Customary system uses traditional units (feet, pounds, gallons) with varying conversion factors.",
+    },
+  ];
 
-  const [result, setResult] =
-    useState<ConversionResult | null>(null);
-
-  const [error, setError] = useState('');
-
-  const convert = () => {
-    setError('');
-    setResult(null);
-
-    const num = parseFloat(value);
-
-    if (!value || isNaN(num)) {
-      setError('Please enter a value.');
-      return;
-    }
-
-    const selected = conversions[conversion];
-
-    setResult({
-      value: selected.convert(num),
-      from: selected.from,
-      to: selected.to,
-    });
-  };
-
-  const clearResult = () => {
-    setError('');
-    if (result) setResult(null);
-  };
-
-  const handleKeyDown = (
-    e: KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (e.key === 'Enter') convert();
+  const appSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "UnitNov Unit Converter",
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    description:
+      "Free online converter for length, weight, volume, speed, and temperature between metric and imperial standards.",
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f1117] px-4 py-12">
-      <div className="w-full max-w-md bg-[#1a1d27] border border-white/10 rounded-2xl p-8">
+    <div className="py-4">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
 
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-2xl mx-auto mb-5">
-          📏
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <Link href="/" className="hover:text-white transition-colors">
+          Home
+        </Link>
+        <span>/</span>
+        <Link href="/calculators" className="hover:text-white transition-colors">
+          Calculators
+        </Link>
+        <span>/</span>
+        <span className="text-slate-200 font-medium">Unit Converter</span>
+      </nav>
+
+      {/* Header */}
+      <div className="mb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
+          <span>🔄</span> Measurement Utilities
         </div>
-
-        <h1 className="text-xl font-semibold text-white text-center mb-1">
+        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
           Unit Converter
         </h1>
-
-        <p className="text-sm text-slate-400 text-center mb-7">
-          Convert between common units instantly
+        <p className="text-slate-400 text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+          Quickly convert measurements across length, weight, temperature, volume, and speed between metric and imperial standards.
         </p>
-
-        {/* Value */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Value
-        </label>
-
-        <input
-          type="number"
-          inputMode="decimal"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-            clearResult();
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder="e.g. 100"
-          className="
-            w-full bg-[#22263a] border border-white/10 rounded-xl
-            px-4 py-3.5 text-2xl font-semibold text-white text-center
-            placeholder:text-slate-600 placeholder:text-lg
-            outline-none focus:border-indigo-500
-            focus:ring-2 focus:ring-indigo-500/20
-            transition-all mb-4
-          "
-        />
-
-        {/* Conversion Type */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Conversion
-        </label>
-
-        <select
-          value={conversion}
-          onChange={(e) => {
-            setConversion(
-              e.target.value as keyof typeof conversions
-            );
-            clearResult();
-          }}
-          className="
-            w-full bg-[#22263a] border border-white/10 rounded-xl
-            px-4 py-3.5 text-white
-            outline-none focus:border-indigo-500
-            focus:ring-2 focus:ring-indigo-500/20
-            transition-all
-          "
-        >
-          {Object.entries(conversions).map(
-            ([key, item]) => (
-              <option key={key} value={key}>
-                {item.label}
-              </option>
-            )
-          )}
-        </select>
-
-        {/* Error */}
-        <p
-          role="alert"
-          className="text-xs text-red-400 mt-2 min-h-[1.25rem]"
-        >
-          {error}
-        </p>
-
-        {/* Button */}
-        <button
-          onClick={convert}
-          className="
-            mt-4 w-full bg-indigo-600 hover:bg-indigo-500
-            active:scale-[0.98]
-            text-white font-semibold text-[15px]
-            rounded-xl py-3.5 transition-all duration-150
-            cursor-pointer border-none
-          "
-        >
-          Convert Unit
-        </button>
-
-        {/* Results */}
-        {result && (
-          <div className="mt-7 pt-7 border-t border-white/10 flex flex-col gap-4 animate-fade-up">
-
-            <div className="text-center">
-              <div className="text-7xl font-bold text-white tracking-tight leading-none">
-                {result.value.toFixed(2)}
-              </div>
-
-              <div className="text-sm text-slate-400 mt-1">
-                {result.to}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2.5">
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  {Number(value).toLocaleString()}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  {result.from}
-                </div>
-              </div>
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  {result.value.toFixed(2)}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  {result.to}
-                </div>
-              </div>
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  1
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  Conversion
-                </div>
-              </div>
-
-            </div>
-
-            <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-4 py-3 text-sm text-indigo-300 flex items-center gap-2">
-              🔄 {value} {result.from} equals{' '}
-              {result.value.toFixed(2)} {result.to}
-            </div>
-
-          </div>
-        )}
       </div>
+
+      {/* Top Ad Slot */}
+      <AdSlot label="Advertisement" format="horizontal" />
+
+      {/* Calculator Client */}
+      <UnitConverterClient />
+
+      {/* Reference Conversion Table */}
+      <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Common Quick Conversion Factors
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-indigo-300 block mb-1">Length</span>
+              <p className="text-slate-400">1 inch = 2.54 cm</p>
+              <p className="text-slate-400">1 meter = 3.28084 ft</p>
+              <p className="text-slate-400">1 mile = 1.60934 km</p>
+            </div>
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-emerald-300 block mb-1">Weight</span>
+              <p className="text-slate-400">1 kg = 2.20462 lbs</p>
+              <p className="text-slate-400">1 lb = 453.592 grams</p>
+              <p className="text-slate-400">1 oz = 28.3495 grams</p>
+            </div>
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-amber-300 block mb-1">Temperature</span>
+              <p className="text-slate-400">0°C = 32°F</p>
+              <p className="text-slate-400">20°C = 68°F (Room)</p>
+              <p className="text-slate-400">100°C = 212°F (Boil)</p>
+            </div>
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-violet-300 block mb-1">Volume</span>
+              <p className="text-slate-400">1 liter = 33.814 fl oz</p>
+              <p className="text-slate-400">1 US gal = 3.78541 L</p>
+              <p className="text-slate-400">1 cup = 236.588 mL</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Second Ad Slot */}
+        <AdSlot label="Sponsored Content" format="horizontal" />
+
+        {/* FAQs */}
+        <FAQAccordion items={faqs} />
+
+        {/* Related Tools */}
+        <section className="pt-8 border-t border-white/[0.08]">
+          <h3 className="text-lg font-bold text-white mb-4">Related Calculators</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              href="/calculators/bmi-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">⚖️</span>
+              <h4 className="font-semibold text-white text-sm">BMI Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate Body Mass Index using metric and imperial.</p>
+            </Link>
+            <Link
+              href="/calculators/percentage-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">📊</span>
+              <h4 className="font-semibold text-white text-sm">Percentage Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate percentages, increases, and proportions.</p>
+            </Link>
+            <Link
+              href="/calculators/date-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">📅</span>
+              <h4 className="font-semibold text-white text-sm">Date Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Convert time durations and business days.</p>
+            </Link>
+          </div>
+        </section>
+      </article>
     </div>
   );
 }

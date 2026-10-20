@@ -1,173 +1,169 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import AgeCalculatorClient from "./AgeCalculatorClient";
+import AdSlot from "@/src/components/AdSlot";
+import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
-import { useState, KeyboardEvent } from 'react';
+export const metadata: Metadata = {
+  title: "Age Calculator - Exact Chronological Age & Birthday Countdown | UnitNov",
+  description:
+    "Calculate your exact age in years, months, weeks, days, hours, and minutes. Free chronological age calculator with birthday countdown and leap year precision.",
+  keywords: [
+    "age calculator",
+    "exact age calculator",
+    "calculate my age",
+    "birthday countdown",
+    "how old am i",
+    "chronological age calculator",
+    "days lived calculator",
+  ],
+  alternates: {
+    canonical: "https://unitnov.com/calculators/age-calculator",
+  },
+  openGraph: {
+    title: "Age Calculator - Exact Chronological Age in Years, Months, Days",
+    description: "Calculate your exact age down to the day, hour, and minute with next birthday countdown.",
+    url: "https://unitnov.com/calculators/age-calculator",
+  },
+};
 
-interface AgeResult {
-  age: number;
-  months: number;
-  weeks: number;
-  days: number;
-  daysUntilBirthday: number;
-}
+export default function AgeCalculatorPage() {
+  const faqs: FAQItem[] = [
+    {
+      question: "How is chronological age calculated?",
+      answer:
+        "Chronological age is calculated by finding the exact time elapsed between your date of birth and the current calendar date. It accounts for varying days in each month (28, 29, 30, or 31) and leap years (366 days).",
+    },
+    {
+      question: "How does the calculator handle leap years?",
+      answer:
+        "Our calculation engine uses native UTC calendar methods that accurately account for February 29th in leap years (such as 2000, 2004, 2020, 2024, etc.), ensuring total days lived is 100% mathematically correct.",
+    },
+    {
+      question: "Can I calculate the age of someone on a specific historical date?",
+      answer:
+        "By default, UnitNov calculates age relative to today's date. If you need to find the duration between two specific historical dates, you can also use our Date Calculator.",
+    },
+  ];
 
-export default function AgeCalculator() {
-  const [year, setYear] = useState('');
-  const [result, setResult] = useState<AgeResult | null>(null);
-  const [error, setError] = useState('');
-
-  const calculate = () => {
-    setError('');
-    setResult(null);
-
-    const yr = parseInt(year, 10);
-    const now = new Date();
-    const curYr = now.getFullYear();
-
-    if (!year || isNaN(yr)) {
-      setError('Please enter a birth year.');
-      return;
-    }
-    if (yr < 1900) {
-      setError('Please enter a year after 1900.');
-      return;
-    }
-    if (yr > curYr) {
-      setError("Birth year can't be in the future.");
-      return;
-    }
-
-    const age = curYr - yr;
-    const birthDateThisYear = new Date(yr, now.getMonth(), now.getDate());
-    const totalDays = Math.round(
-      (now.getTime() - birthDateThisYear.getTime()) / 86_400_000
-    );
-    const nextBirthday = new Date(curYr + 1, now.getMonth(), now.getDate());
-    const daysUntilBirthday = Math.round(
-      (nextBirthday.getTime() - now.getTime()) / 86_400_000
-    );
-
-    setResult({
-      age,
-      months: age * 12,
-      weeks: Math.round(totalDays / 7),
-      days: totalDays,
-      daysUntilBirthday,
-    });
+  const appSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "UnitNov Age Calculator",
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    description:
+      "Free online tool to calculate exact age in years, months, days, weeks, and total hours lived with birthday countdown.",
   };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') calculate();
-  };
-
-  const handleChange = (val: string) => {
-    setYear(val);
-    setError('');
-    if (result) setResult(null);
-  };
-
-  const bdayText =
-    result?.daysUntilBirthday === 365
-      ? '🎂 Your birthday is today!'
-      : `🎉 ${result?.daysUntilBirthday} days until your next birthday`;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f1117] px-4 py-12">
-      <div className="w-full max-w-md bg-[#1a1d27] border border-white/10 rounded-2xl p-8">
+    <div className="py-4">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
 
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-2xl mx-auto mb-5">
-          🎂
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <Link href="/" className="hover:text-white transition-colors">
+          Home
+        </Link>
+        <span>/</span>
+        <Link href="/calculators" className="hover:text-white transition-colors">
+          Calculators
+        </Link>
+        <span>/</span>
+        <span className="text-slate-200 font-medium">Age Calculator</span>
+      </nav>
+
+      {/* Header */}
+      <div className="mb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
+          <span>🎂</span> Date & Time Utility
         </div>
-
-        <h1 className="text-xl font-semibold text-white text-center mb-1">
-          How old are you?
+        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+          Age Calculator
         </h1>
-        <p className="text-sm text-slate-400 text-center mb-7">
-          Enter your birth year to find out
+        <p className="text-slate-400 text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+          Find out your exact chronological age in years, months, weeks, days, and total hours lived.
         </p>
+      </div>
 
-        {/* Input */}
-        <label htmlFor="yearInput" className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Birth year
-        </label>
-        <input
-          id="yearInput"
-          type="number"
-          inputMode="numeric"
-          placeholder="e.g. 1990"
-          min={1900}
-          max={new Date().getFullYear()}
-          value={year}
-          onChange={(e) => handleChange(e.target.value)}
-          onKeyDown={handleKeyDown}
-          aria-describedby="yearError"
-          className="
-            w-full bg-[#22263a] border border-white/10 rounded-xl
-            px-4 py-3.5 text-2xl font-semibold text-white text-center
-            tracking-widest placeholder:text-slate-600 placeholder:text-lg
-            placeholder:font-normal placeholder:tracking-normal
-            outline-none focus:border-indigo-500 focus:ring-2
-            focus:ring-indigo-500/20 transition-all
-            [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none
-            [&::-webkit-inner-spin-button]:appearance-none
-          "
-        />
+      {/* Top Ad Slot */}
+      <AdSlot label="Advertisement" format="horizontal" />
 
-        {/* Error */}
-        <p id="yearError" role="alert" className="text-xs text-red-400 mt-2 min-h-[1.25rem]">
-          {error}
-        </p>
+      {/* Interactive Tool Client */}
+      <AgeCalculatorClient />
 
-        {/* Button */}
-        <button
-          onClick={calculate}
-          className="
-            mt-4 w-full bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98]
-            text-white font-semibold text-[15px] rounded-xl py-3.5
-            transition-all duration-150 cursor-pointer border-none
-          "
-        >
-          Calculate my age
-        </button>
+      {/* Educational Content & Guidelines */}
+      <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Understanding Chronological Age Calculation
+          </h2>
+          <p className="mb-4">
+            In most western cultures, age increments by one year on each anniversary of a person&apos;s birth. However, calculating the exact number of months and days requires adjusting for the irregular number of days in each calendar month:
+          </p>
 
-        {/* Result */}
-        {result && (
-          <div className="mt-7 pt-7 border-t border-white/10 flex flex-col gap-4 animate-fade-up">
-
-            {/* Big age */}
-            <div className="text-center">
-              <div className="text-7xl font-bold text-white tracking-tight leading-none">
-                {result.age}
-              </div>
-              <div className="text-sm text-slate-400 mt-1">years old</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 text-xs md:text-sm">
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">Standard Months</span>
+              Months have 30 or 31 days (except February), which require borrowing days from the preceding month when the current day is less than the birth day.
             </div>
-
-            {/* Stats grid */}
-            <div className="grid grid-cols-3 gap-2.5">
-              {[
-                { val: result.months.toLocaleString(), label: 'Months' },
-                { val: result.weeks.toLocaleString(), label: 'Weeks' },
-                { val: result.days.toLocaleString(), label: 'Days' },
-              ].map(({ val, label }) => (
-                <div
-                  key={label}
-                  className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center"
-                >
-                  <div className="text-lg font-semibold text-white">{val}</div>
-                  <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                    {label}
-                  </div>
-                </div>
-              ))}
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">Leap Year Adjustments</span>
+              Leap years occur every 4 years (with century exceptions). UnitNov adds 366 days for each leap cycle lived.
             </div>
-
-            {/* Birthday countdown */}
-            <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-4 py-3 text-sm text-indigo-300 flex items-center gap-2.5">
-              {bdayText}
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">Total Hours Lived</span>
+              Computed by taking the millisecond timestamp difference and dividing by 3,600,000 milliseconds per hour.
             </div>
           </div>
-        )}
-      </div>
+        </section>
+
+        {/* Second Ad Slot */}
+        <AdSlot label="Sponsored Content" format="horizontal" />
+
+        {/* FAQs */}
+        <FAQAccordion items={faqs} />
+
+        {/* Related Tools */}
+        <section className="pt-8 border-t border-white/[0.08]">
+          <h3 className="text-lg font-bold text-white mb-4">Related Time & Math Calculators</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              href="/calculators/date-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">📅</span>
+              <h4 className="font-semibold text-white text-sm">Date Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate duration and days between two dates.</p>
+            </Link>
+            <Link
+              href="/calculators/bmi-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">⚖️</span>
+              <h4 className="font-semibold text-white text-sm">BMI Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Check body mass index and healthy weight ranges.</p>
+            </Link>
+            <Link
+              href="/calculators/percentage-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">📊</span>
+              <h4 className="font-semibold text-white text-sm">Percentage Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Solve percentage increases, discounts, and proportions.</p>
+            </Link>
+          </div>
+        </section>
+      </article>
     </div>
   );
 }

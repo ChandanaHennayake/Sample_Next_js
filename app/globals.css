@@ -290,3 +290,86 @@ body {
 .animate-fade-up {
   animation: fade-up 0.3s ease forwards;
 }
+
+/* ── Phase 2: palette, toasts, drawers ── */
+@keyframes palette-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes palette-pop {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes star-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.palette-fade { animation: palette-fade 0.15s ease-out; }
+.palette-pop  { animation: palette-pop 0.18s cubic-bezier(0.16, 1, 0.3, 1); }
+.toast-in     { animation: toast-in 0.22s cubic-bezier(0.16, 1, 0.3, 1); }
+.slide-down   { animation: palette-pop 0.18s ease-out; }
+.star-pop     { animation: star-pop 0.3s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .palette-fade,
+  .palette-pop,
+  .toast-in,
+  .slide-down,
+  .star-pop,
+  .animate-fade-up {
+    animation: none;
+  }
+}
+
+/* ── Phase 5: Clean Branded Print / PDF Styles ── */
+@media print {
+  header,
+  footer,
+  aside,
+  nav,
+  .no-print,
+  button,
+  [data-no-print="true"] {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .bg-\[\#151926\],
+  .bg-\[\#1B2032\],
+  .bg-\[\#121520\] {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  .text-white {
+    color: #0f172a !important;
+  }
+
+  .text-slate-300,
+  .text-slate-400,
+  .text-slate-500 {
+    color: #475569 !important;
+  }
+}

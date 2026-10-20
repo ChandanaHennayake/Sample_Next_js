@@ -1,206 +1,194 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import CompoundInterestCalculatorClient from "./CompoundInterestCalculatorClient";
+import AdSlot from "@/src/components/AdSlot";
+import AffiliateCard from "@/src/components/AffiliateCard";
+import ShareBar from "@/src/components/ShareBar";
+import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
-import { useState, KeyboardEvent } from 'react';
+export const metadata: Metadata = {
+  title: "Compound Interest Calculator - Investment Growth & APY | UnitNov",
+  description:
+    "Calculate compound interest and projected investment growth with monthly contributions. Free, fast financial forecasting tool for savings and retirement.",
+  keywords: [
+    "compound interest calculator",
+    "investment calculator",
+    "interest growth calculator",
+    "future value calculator",
+    "savings growth calculator",
+    "compound interest formula",
+  ],
+  alternates: {
+    canonical: "https://unitnov.com/calculators/compound-interest-calculator",
+  },
+  openGraph: {
+    title: "Compound Interest Calculator - Project Wealth & Investment Growth",
+    description: "Calculate future savings and investment balance with regular monthly additions and compound interest.",
+    url: "https://unitnov.com/calculators/compound-interest-calculator",
+  },
+};
 
-interface CompoundResult {
-  futureValue: number;
-  interestEarned: number;
-}
+export default function CompoundInterestCalculatorPage() {
+  const faqs: FAQItem[] = [
+    {
+      question: "What is compound interest and how does it work?",
+      answer:
+        "Compound interest is the interest calculated on the initial principal and also on the accumulated interest from previous periods. Unlike simple interest, which only grows on the original balance, compound interest generates 'interest on interest,' causing your wealth to grow exponentially over time.",
+    },
+    {
+      question: "What is the compound interest formula?",
+      answer:
+        "The standard formula for compound interest on a lump sum is A = P(1 + r/n)^(nt), where A is the future balance, P is the principal investment, r is the annual nominal interest rate, n is the number of compounding times per year, and t is the number of years.",
+    },
+    {
+      question: "How does compounding frequency affect total return?",
+      answer:
+        "The more frequently interest compounds—such as daily or monthly versus annually—the faster your balance grows, because interest is added to your principal more frequently and starts earning its own interest sooner.",
+    },
+    {
+      question: "What is the Rule of 72?",
+      answer:
+        "The Rule of 72 is a quick mental math shortcut to estimate how many years it takes for an investment to double: divide 72 by your annual interest rate. For example, at an 8% annual return, your money doubles in approximately 9 years (72 ÷ 8 = 9).",
+    },
+  ];
 
-export default function CompoundInterestCalculator() {
-  const [principal, setPrincipal] = useState('');
-  const [rate, setRate] = useState('');
-  const [years, setYears] = useState('');
-
-  const [result, setResult] = useState<CompoundResult | null>(null);
-  const [error, setError] = useState('');
-
-  const calculate = () => {
-    setError('');
-    setResult(null);
-
-    const P = parseFloat(principal);
-    const r = parseFloat(rate);
-    const t = parseFloat(years);
-
-    if (
-      !principal ||
-      !rate ||
-      !years ||
-      isNaN(P) ||
-      isNaN(r) ||
-      isNaN(t)
-    ) {
-      setError('Please fill in all fields.');
-      return;
-    }
-
-    if (P <= 0 || r <= 0 || t <= 0) {
-      setError('All values must be greater than 0.');
-      return;
-    }
-
-    const futureValue = P * Math.pow(1 + r / 100, t);
-    const interestEarned = futureValue - P;
-
-    setResult({
-      futureValue,
-      interestEarned,
-    });
-  };
-
-  const handleKeyDown = (
-    e: KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (e.key === 'Enter') calculate();
-  };
-
-  const resetResult = () => {
-    setError('');
-    if (result) setResult(null);
+  const appSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "UnitNov Compound Interest Calculator",
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "All",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    description:
+      "Free online calculator to forecast investment growth, compound returns, and future wealth with recurring contributions.",
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f1117] px-4 py-12">
-      <div className="w-full max-w-md bg-[#1a1d27] border border-white/10 rounded-2xl p-8">
+    <div className="py-4">
+      {/* Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
 
-        {/* Icon */}
-        <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-2xl mx-auto mb-5">
-          📈
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <Link href="/" className="hover:text-white transition-colors">
+          Home
+        </Link>
+        <span>/</span>
+        <Link href="/calculators" className="hover:text-white transition-colors">
+          Calculators
+        </Link>
+        <span>/</span>
+        <span className="text-slate-200 font-medium">Compound Interest Calculator</span>
+      </nav>
+
+      {/* Header */}
+      <div className="mb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
+          <span>📈</span> Investing & Wealth
         </div>
-
-        <h1 className="text-xl font-semibold text-white text-center mb-1">
+        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight">
           Compound Interest Calculator
         </h1>
-
-        <p className="text-sm text-slate-400 text-center mb-7">
-          Estimate the future value of your investment
+        <p className="text-slate-400 text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+          Project how your savings and investments grow over time with recurring contributions and compound returns.
         </p>
+      </div>
 
-        {/* Principal */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Principal Amount
-        </label>
+      {/* Top Ad Slot */}
+      <AdSlot label="Advertisement" format="horizontal" />
 
-        <input
-          type="number"
-          placeholder="e.g. 10000"
-          value={principal}
-          onChange={(e) => {
-            setPrincipal(e.target.value);
-            resetResult();
-          }}
-          onKeyDown={handleKeyDown}
-          className="w-full bg-[#22263a] border border-white/10 rounded-xl px-4 py-3.5 text-2xl font-semibold text-white text-center placeholder:text-slate-600 placeholder:text-lg outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all mb-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
+      {/* Calculator Client */}
+      <CompoundInterestCalculatorClient />
 
-        {/* Rate */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Annual Interest Rate (%)
-        </label>
+      {/* Share & Export */}
+      <ShareBar toolName="Compound Interest Calculator" className="my-6" />
 
-        <input
-          type="number"
-          step="0.01"
-          placeholder="e.g. 8"
-          value={rate}
-          onChange={(e) => {
-            setRate(e.target.value);
-            resetResult();
-          }}
-          onKeyDown={handleKeyDown}
-          className="w-full bg-[#22263a] border border-white/10 rounded-xl px-4 py-3.5 text-2xl font-semibold text-white text-center placeholder:text-slate-600 placeholder:text-lg outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all mb-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
+      {/* Investing Affiliate Card */}
+      <AffiliateCard
+        title="Put Your Money to Work with High-Yield Savings & Investing"
+        description="Earn top APY on your emergency fund or automate long-term index fund investing with zero commission fees."
+        ctaText="Explore High-Yield Accounts"
+        ctaHref={process.env.NEXT_PUBLIC_INVESTING_AFFILIATE_URL}
+      />
 
-        {/* Years */}
-        <label className="block text-xs font-medium text-slate-400 uppercase tracking-widest mb-2">
-          Investment Period (Years)
-        </label>
+      {/* SEO Content & Guide */}
+      <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            The Mathematics of Compound Growth
+          </h2>
+          <p className="mb-4">
+            Compound interest represents one of the most powerful principles in personal finance. When your interest generates additional interest, growth follows an exponential curve described by:
+          </p>
 
-        <input
-          type="number"
-          placeholder="e.g. 10"
-          value={years}
-          onChange={(e) => {
-            setYears(e.target.value);
-            resetResult();
-          }}
-          onKeyDown={handleKeyDown}
-          className="w-full bg-[#22263a] border border-white/10 rounded-xl px-4 py-3.5 text-2xl font-semibold text-white text-center placeholder:text-slate-600 placeholder:text-lg outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        />
+          <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 my-4 text-center font-mono text-indigo-300 text-base md:text-lg">
+            A = P × (1 + r/n)ⁿᵗ
+          </div>
 
-        <p
-          role="alert"
-          className="text-xs text-red-400 mt-2 min-h-[1.25rem]"
-        >
-          {error}
-        </p>
-
-        <button
-          onClick={calculate}
-          className="mt-4 w-full bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] text-white font-semibold text-[15px] rounded-xl py-3.5 transition-all duration-150 cursor-pointer border-none"
-        >
-          Calculate Growth
-        </button>
-
-        {result && (
-          <div className="mt-7 pt-7 border-t border-white/10 flex flex-col gap-4 animate-fade-up">
-
-            <div className="text-center">
-              <div className="text-6xl font-bold text-white tracking-tight leading-none">
-                {result.futureValue.toLocaleString(undefined, {
-                  maximumFractionDigits: 2,
-                })}
-              </div>
-
-              <div className="text-sm text-slate-400 mt-1">
-                future value
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-6 text-xs md:text-sm">
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">A = Final Balance</span>
+              The future value of the investment including accumulated compound interest.
             </div>
-
-            <div className="grid grid-cols-3 gap-2.5">
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  {Number(principal).toLocaleString()}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  Principal
-                </div>
-              </div>
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  {result.interestEarned.toLocaleString(undefined, {
-                    maximumFractionDigits: 0,
-                  })}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  Interest
-                </div>
-              </div>
-
-              <div className="bg-[#22263a] border border-white/10 rounded-xl py-3.5 text-center">
-                <div className="text-lg font-semibold text-white">
-                  {years}
-                </div>
-
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">
-                  Years
-                </div>
-              </div>
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">P = Principal</span>
+              Initial starting sum deposited before compounding begins.
             </div>
-
-            <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-4 py-3 text-sm text-indigo-300 flex items-center gap-2">
-              🚀 Your investment could grow by{' '}
-              {result.interestEarned.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-              })}
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">r = Annual Rate</span>
+              Annual interest rate expressed as a decimal (e.g., 8% = 0.08).
+            </div>
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">n & t = Cycles</span>
+              n is compounding frequency per year; t is total years invested.
             </div>
           </div>
-        )}
-      </div>
+        </section>
+
+        {/* Second Ad Slot */}
+        <AdSlot label="Sponsored Content" format="horizontal" />
+
+        {/* FAQs */}
+        <FAQAccordion items={faqs} />
+
+        {/* Related Tools */}
+        <section className="pt-8 border-t border-white/[0.08]">
+          <h3 className="text-lg font-bold text-white mb-4">Related Calculators</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              href="/calculators/loan-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">💳</span>
+              <h4 className="font-semibold text-white text-sm">Loan Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate installment payments and borrowing costs.</p>
+            </Link>
+            <Link
+              href="/calculators/mortgage-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">🏡</span>
+              <h4 className="font-semibold text-white text-sm">Mortgage Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Estimate home loan financing and interest.</p>
+            </Link>
+            <Link
+              href="/calculators/percentage-calculator"
+              className="bg-[#151926] border border-white/[0.08] rounded-xl p-4 hover:border-indigo-500/40 transition-colors"
+            >
+              <span className="text-xl block mb-1">📊</span>
+              <h4 className="font-semibold text-white text-sm">Percentage Calculator</h4>
+              <p className="text-xs text-slate-400 mt-1">Calculate investment returns and percentage change.</p>
+            </Link>
+          </div>
+        </section>
+      </article>
     </div>
   );
 }
