@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BMICalculatorClient from "./BMICalculatorClient";
 import AdSlot from "@/src/components/AdSlot";
+import ShareBar from "@/src/components/ShareBar";
+import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
@@ -73,18 +75,13 @@ export default function BMICalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <Link href="/calculators" className="hover:text-white transition-colors">
-          Calculators
-        </Link>
-        <span>/</span>
-        <span className="text-slate-200 font-medium">BMI Calculator</span>
-      </nav>
+      {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
+      <Breadcrumb
+        items={[
+          { name: "Calculators", href: "/calculators" },
+          { name: "BMI Calculator", href: "/calculators/bmi-calculator" },
+        ]}
+      />
 
       {/* Header */}
       <div className="mb-8">
@@ -104,6 +101,9 @@ export default function BMICalculatorPage() {
 
       {/* Calculator Client */}
       <BMICalculatorClient />
+
+      {/* Share & Export */}
+      <ShareBar toolName="BMI Calculator" className="my-6" />
 
       {/* Medical Disclaimer Alert */}
       <div className="mt-8 p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 text-amber-200/90 text-xs flex items-start gap-3">

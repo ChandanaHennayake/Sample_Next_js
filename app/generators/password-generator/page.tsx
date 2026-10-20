@@ -3,6 +3,7 @@ import Link from "next/link";
 import PasswordGeneratorClient from "./PasswordGeneratorClient";
 import AdSlot from "@/src/components/AdSlot";
 import ShareBar from "@/src/components/ShareBar";
+import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
@@ -69,18 +70,13 @@ export default function PasswordGeneratorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <Link href="/generators" className="hover:text-white transition-colors">
-          Generators
-        </Link>
-        <span>/</span>
-        <span className="text-slate-200 font-medium">Password Generator</span>
-      </nav>
+      {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
+      <Breadcrumb
+        items={[
+          { name: "Generators", href: "/generators" },
+          { name: "Password Generator", href: "/generators/password-generator" },
+        ]}
+      />
 
       {/* Header */}
       <div className="mb-8">

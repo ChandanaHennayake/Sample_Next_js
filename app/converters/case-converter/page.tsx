@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import CaseConverterClient from "./CaseConverterClient";
 import AdSlot from "@/src/components/AdSlot";
+import ShareBar from "@/src/components/ShareBar";
+import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
@@ -75,18 +77,13 @@ export default function CaseConverterPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <Link href="/converters" className="hover:text-white transition-colors">
-          Converters
-        </Link>
-        <span>/</span>
-        <span className="text-slate-200 font-medium">Case Converter</span>
-      </nav>
+      {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
+      <Breadcrumb
+        items={[
+          { name: "Converters", href: "/converters" },
+          { name: "Case Converter", href: "/converters/case-converter" },
+        ]}
+      />
 
       {/* Header */}
       <div className="mb-8">
@@ -106,6 +103,9 @@ export default function CaseConverterPage() {
 
       {/* Converter Client */}
       <CaseConverterClient />
+
+      {/* Share & Export */}
+      <ShareBar toolName="Text Case Converter" className="my-6" />
 
       {/* Case Guide Section */}
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">

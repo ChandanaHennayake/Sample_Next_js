@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import DateCalculatorClient from "./DateCalculatorClient";
 import AdSlot from "@/src/components/AdSlot";
+import ShareBar from "@/src/components/ShareBar";
+import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
@@ -68,18 +70,13 @@ export default function DateCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <Link href="/calculators" className="hover:text-white transition-colors">
-          Calculators
-        </Link>
-        <span>/</span>
-        <span className="text-slate-200 font-medium">Date Calculator</span>
-      </nav>
+      {/* Semantic Breadcrumb Navigation & Schema */}
+      <Breadcrumb
+        items={[
+          { name: "Calculators", href: "/calculators" },
+          { name: "Date Calculator", href: "/calculators/date-calculator" },
+        ]}
+      />
 
       {/* Header */}
       <div className="mb-8">
@@ -99,6 +96,9 @@ export default function DateCalculatorPage() {
 
       {/* Calculator Client */}
       <DateCalculatorClient />
+
+      {/* Share & Export */}
+      <ShareBar toolName="Date Calculator" className="my-6" />
 
       {/* SEO Content Section */}
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">

@@ -4,6 +4,7 @@ import LoanCalculatorClient from "./LoanCalculatorClient";
 import AdSlot from "@/src/components/AdSlot";
 import AffiliateCard from "@/src/components/AffiliateCard";
 import ShareBar from "@/src/components/ShareBar";
+import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
@@ -75,18 +76,13 @@ export default function LoanCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
       />
 
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-        <Link href="/" className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <Link href="/calculators" className="hover:text-white transition-colors">
-          Calculators
-        </Link>
-        <span>/</span>
-        <span className="text-slate-200 font-medium">Loan Calculator</span>
-      </nav>
+      {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
+      <Breadcrumb
+        items={[
+          { name: "Calculators", href: "/calculators" },
+          { name: "Loan Calculator", href: "/calculators/loan-calculator" },
+        ]}
+      />
 
       {/* Tool Header */}
       <div className="mb-8">
