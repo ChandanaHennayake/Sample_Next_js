@@ -16,54 +16,63 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#0F1117]/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#090B11]/75 backdrop-blur-2xl transition-colors">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-200">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.2}
-                d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="relative">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-violet-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:shadow-indigo-500/40 group-hover:scale-105 transition-all duration-300">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.2}
+                  d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+            <div className="absolute inset-0 rounded-xl bg-indigo-500/20 blur-sm group-hover:blur-md transition-all -z-10" />
           </div>
           <div className="flex flex-col">
-            <span className="text-white font-bold text-lg tracking-tight group-hover:text-indigo-400 transition-colors leading-none">
-              UnitNov
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-white font-extrabold text-lg tracking-tight group-hover:text-indigo-300 transition-colors leading-none">
+                UnitNov
+              </span>
+              <span className="hidden sm:inline-flex text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Free
+              </span>
+            </div>
             <span className="text-[10px] text-slate-400 font-medium tracking-wider uppercase mt-0.5">
-              Free Online Tools
+              Everyday Online Tools
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1.5">
+        <nav className="hidden md:flex items-center gap-2">
           <button
             id="headerSearchButton"
             type="button"
             onClick={openCommandPalette}
-            className="mr-2 flex items-center gap-2 w-56 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-slate-400 text-sm hover:border-indigo-500/40 hover:text-slate-200 transition-colors cursor-pointer"
+            className="mr-2 flex items-center gap-2.5 w-60 px-3.5 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 text-xs hover:border-indigo-500/40 hover:bg-white/[0.06] hover:text-slate-200 transition-all cursor-pointer shadow-sm shadow-black/20 group"
             aria-label="Search tools"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-slate-400 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
             </svg>
-            <span className="flex-1 text-left">Search tools…</span>
-            <kbd className="text-[10px] font-semibold border border-white/10 rounded px-1.5 py-0.5">Ctrl K</kbd>
+            <span className="flex-1 text-left">Search any tool…</span>
+            <kbd className="text-[10px] font-mono font-medium border border-white/10 rounded-md px-1.5 py-0.5 bg-white/5 text-slate-400">Ctrl K</kbd>
           </button>
+
           {navLinks.map((link) => {
             const isActive = pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3.5 py-1.5 text-sm font-medium rounded-lg transition-all duration-150 ${
+                className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
                   isActive
-                    ? "text-white bg-white/10 shadow-sm"
+                    ? "text-white bg-white/10 shadow-sm border border-white/10"
                     : "text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
@@ -72,13 +81,14 @@ export default function Header() {
             );
           })}
 
-          <div className="w-px h-4 bg-white/10 mx-2" />
+          <div className="w-px h-4 bg-white/10 mx-1.5" />
 
           <Link
             href="/all-tools"
-            className="px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 rounded-lg transition-all duration-200 shadow-md shadow-indigo-500/20 hover:shadow-indigo-500/35 active:scale-95"
+            className="px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 hover:from-indigo-400 hover:to-violet-500 rounded-xl transition-all duration-200 shadow-md shadow-indigo-500/25 hover:shadow-indigo-500/40 active:scale-95 flex items-center gap-1.5"
           >
-            All Tools
+            <span>All Tools</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/20">13</span>
           </Link>
         </nav>
 

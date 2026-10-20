@@ -49,21 +49,24 @@ function StarButton({ tool, isFav }: { tool: Tool; isFav: boolean }) {
 
 function ToolCard({ tool, isFav }: { tool: Tool; isFav: boolean }) {
   return (
-    <div className="group relative rounded-2xl bg-[#151926] border border-white/[0.08] hover:border-indigo-500/40 hover:bg-[#1A2030] transition-all duration-200 hover:-translate-y-1 shadow-lg shadow-black/10">
+    <div className="group relative rounded-2xl glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1.5">
+      {/* Ambient hover glow gradient inside card */}
+      <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-indigo-500/10 via-violet-500/5 to-transparent rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
       <StarButton tool={tool} isFav={isFav} />
       <Link href={tool.href} className="block p-6 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500">
-        <div className="flex items-start gap-2 mb-4 pr-10">
-          <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-200">
+        <div className="flex items-start gap-3 mb-4 pr-10">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:border-indigo-500/40 transition-all duration-300 shadow-inner">
             {tool.icon}
           </div>
           {tool.badge && (
             <span
-              className={`ml-auto text-[10px] font-semibold px-2.5 py-0.5 rounded-full ${
+              className={`ml-auto text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
                 tool.badge === "Popular"
-                  ? "bg-amber-500/15 text-amber-300 border border-amber-500/25"
+                  ? "bg-amber-500/15 text-amber-300 border-amber-500/30 shadow-sm shadow-amber-500/10"
                   : tool.badge === "Featured"
-                  ? "bg-violet-500/15 text-violet-300 border border-violet-500/25"
-                  : "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
+                  ? "bg-violet-500/15 text-violet-300 border-violet-500/30 shadow-sm shadow-violet-500/10"
+                  : "bg-emerald-500/15 text-emerald-300 border-emerald-500/30 shadow-sm shadow-emerald-500/10"
               }`}
             >
               {tool.badge}
@@ -71,15 +74,17 @@ function ToolCard({ tool, isFav }: { tool: Tool; isFav: boolean }) {
           )}
         </div>
 
-        <span className="text-[10px] uppercase font-bold tracking-wider text-indigo-400">{tool.categoryLabel}</span>
-        <h2 className="text-white font-semibold text-lg mt-1 mb-2 group-hover:text-indigo-400 transition-colors">
+        <span className="text-[10px] uppercase font-bold tracking-widest text-indigo-400 block mb-1">
+          {tool.categoryLabel}
+        </span>
+        <h2 className="text-white font-bold text-lg group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-indigo-200 transition-all duration-200">
           {tool.name}
         </h2>
-        <p className="text-slate-400 text-xs leading-relaxed line-clamp-2">{tool.description}</p>
+        <p className="text-slate-400 text-xs leading-relaxed line-clamp-2 mt-1.5">{tool.description}</p>
 
-        <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-indigo-400 text-xs font-semibold">
-          <span>Launch tool</span>
-          <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-indigo-400 text-xs font-semibold group-hover:text-indigo-300 transition-colors">
+          <span className="tracking-wide">Launch tool</span>
+          <svg className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M9 5l7 7-7 7" />
           </svg>
         </div>
@@ -168,8 +173,9 @@ export default function ToolsDirectory({
         {description && <p className="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">{description}</p>}
 
         {/* Live Search Bar */}
-        <div className="relative max-w-xl mx-auto mt-8">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="relative max-w-xl mx-auto mt-8 group">
+          <div className="absolute inset-0 bg-indigo-500/10 rounded-2xl blur-xl group-hover:bg-indigo-500/20 transition-all pointer-events-none -z-10" />
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-hover:text-indigo-400 transition-colors pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
           </svg>
           <input
@@ -177,27 +183,27 @@ export default function ToolsDirectory({
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by name or keyword (loan, bmi, age, kg to lbs)…"
+            placeholder="Search by tool name or keyword (loan, bmi, qr, password, case)…"
             aria-label="Filter tools"
-            className="w-full pl-12 pr-20 py-3.5 rounded-2xl bg-[#151926] border border-white/10 text-white placeholder-slate-500 text-sm md:text-base focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-xl shadow-black/20"
+            className="w-full pl-12 pr-20 py-4 rounded-2xl glass-input text-white placeholder-slate-400 text-sm md:text-base focus:border-indigo-500/60 shadow-2xl shadow-black/40 transition-all"
           />
           {searchQuery ? (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs bg-white/10 hover:bg-white/20 rounded-full px-2 py-0.5 cursor-pointer"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs bg-white/10 hover:bg-white/20 rounded-full px-2.5 py-1 cursor-pointer transition-colors"
             >
               Clear
             </button>
           ) : (
-            <kbd className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-slate-500 border border-white/10 rounded px-1.5 py-0.5">
+            <kbd className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-mono font-medium text-slate-400 border border-white/10 rounded-md px-1.5 py-0.5 bg-white/5">
               Ctrl K
             </kbd>
           )}
         </div>
 
         {/* Category Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mt-6" role="tablist" aria-label="Tool categories">
+        <div className="flex flex-wrap items-center justify-center gap-2 mt-7" role="tablist" aria-label="Tool categories">
           {categories.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             const count = cat.id === "all" ? tools.length : tools.filter((t) => t.category === cat.id).length;
@@ -208,14 +214,14 @@ export default function ToolsDirectory({
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
+                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
                   isSelected
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/25"
-                    : "bg-[#151926] text-slate-400 hover:text-white hover:bg-white/5 border border-white/5"
+                    ? "bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-500/25 border border-indigo-400/30 scale-105"
+                    : "glass-card text-slate-400 hover:text-white hover:border-white/15 hover:bg-white/[0.04]"
                 }`}
               >
                 <span>{cat.label}</span>
-                <span className={`text-[10px] px-1.5 rounded-full ${isSelected ? "bg-white/20 text-white" : "bg-white/5 text-slate-500"}`}>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${isSelected ? "bg-white/25 text-white" : "bg-white/5 text-slate-400"}`}>
                   {count}
                 </span>
               </button>

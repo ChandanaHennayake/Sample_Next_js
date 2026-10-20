@@ -136,17 +136,17 @@ export default function CommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-start justify-center px-4 pt-[12vh] bg-black/60 backdrop-blur-sm palette-fade"
+      className="fixed inset-0 z-[90] flex items-start justify-center px-4 pt-[12vh] bg-black/75 backdrop-blur-md palette-fade"
       onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)}
       role="dialog"
       aria-modal="true"
       aria-label="Search tools"
     >
-      <div className="palette-pop w-full max-w-xl rounded-2xl border border-white/10 bg-[#141826]/95 backdrop-blur-xl shadow-2xl shadow-black/60 overflow-hidden">
+      <div className="palette-pop w-full max-w-xl rounded-3xl border border-white/10 bg-[#0E121E]/95 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden">
         {/* Search input */}
-        <div className="flex items-center gap-3 px-4 border-b border-white/[0.08]">
-          <svg className="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+        <div className="flex items-center gap-3 px-5 border-b border-white/[0.08]">
+          <svg className="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
           </svg>
           <input
             id="commandPaletteInput"
@@ -157,14 +157,14 @@ export default function CommandPalette() {
               setActive(0);
             }}
             onKeyDown={onInputKey}
-            placeholder="Search tools… try “loan”, “bmi”, “kg to lbs”"
-            className="flex-1 bg-transparent py-4 text-base text-white placeholder-slate-500 outline-none"
+            placeholder="Search all 13 tools (e.g., loan, bmi, qr, password, case)…"
+            className="flex-1 bg-transparent py-4 text-base text-white placeholder-slate-400 outline-none font-medium"
             role="combobox"
             aria-expanded="true"
             aria-controls="commandPaletteList"
             aria-activedescendant={flat[active] ? `palette-item-${flat[active].id}` : undefined}
           />
-          <kbd className="hidden sm:inline text-[10px] font-semibold text-slate-400 border border-white/10 rounded-md px-1.5 py-0.5">
+          <kbd className="hidden sm:inline text-[10px] font-mono font-medium text-slate-400 border border-white/10 rounded-md px-1.5 py-0.5 bg-white/5">
             ESC
           </kbd>
         </div>
@@ -184,7 +184,7 @@ export default function CommandPalette() {
               <div className="px-3 pt-3 pb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500">
                 {section.title}
               </div>
-              <ul role="presentation">
+              <ul role="presentation" className="space-y-0.5">
                 {section.items.map((tool) => {
                   index++;
                   const i = index;
@@ -198,21 +198,29 @@ export default function CommandPalette() {
                       aria-selected={isActive}
                       onMouseMove={() => setActive(i)}
                       onClick={() => go(tool)}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer transition-colors ${
-                        isActive ? "bg-indigo-500/15" : "hover:bg-white/5"
+                      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl cursor-pointer transition-all duration-150 ${
+                        isActive
+                          ? "bg-gradient-to-r from-indigo-500/20 via-violet-500/15 to-transparent border border-indigo-500/30 text-white shadow-sm"
+                          : "hover:bg-white/[0.04] text-slate-300 border border-transparent"
                       }`}
                     >
-                      <span className="w-9 h-9 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-lg shrink-0">
+                      <span className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-xl shrink-0">
                         {tool.icon}
                       </span>
                       <span className="flex-1 min-w-0">
-                        <span className={`block text-sm font-medium ${isActive ? "text-white" : "text-slate-200"}`}>
+                        <span className={`block text-sm font-semibold ${isActive ? "text-white" : "text-slate-200"}`}>
                           {tool.name}
                         </span>
-                        <span className="block text-xs text-slate-500 truncate">{tool.description}</span>
+                        <span className="block text-xs text-slate-400 truncate">{tool.description}</span>
                       </span>
-                      <span className="text-[10px] text-slate-500 hidden sm:block">{tool.categoryLabel}</span>
-                      {isActive && <span className="text-indigo-300 text-xs">↵</span>}
+                      <span className="text-[10px] uppercase font-bold tracking-wider text-indigo-400/80 px-2 py-0.5 rounded-md bg-white/5 hidden sm:block">
+                        {tool.categoryLabel}
+                      </span>
+                      {isActive && (
+                        <span className="text-[11px] font-mono text-indigo-300 bg-indigo-500/20 px-1.5 py-0.5 rounded border border-indigo-500/30">
+                          ↵ Jump
+                        </span>
+                      )}
                     </li>
                   );
                 })}
@@ -222,10 +230,10 @@ export default function CommandPalette() {
         </ul>
 
         {/* Footer hints */}
-        <div className="flex items-center gap-4 px-4 py-2.5 border-t border-white/[0.08] text-[11px] text-slate-500">
-          <span><kbd className="font-semibold text-slate-400">↑↓</kbd> navigate</span>
-          <span><kbd className="font-semibold text-slate-400">↵</kbd> open</span>
-          <span className="ml-auto"><kbd className="font-semibold text-slate-400">Ctrl K</kbd> toggle</span>
+        <div className="flex items-center gap-4 px-5 py-3 border-t border-white/[0.08] text-[11px] text-slate-400 bg-black/20">
+          <span><kbd className="font-mono font-medium text-slate-300 border border-white/10 px-1 py-0.2 rounded bg-white/5">↑↓</kbd> navigate</span>
+          <span><kbd className="font-mono font-medium text-slate-300 border border-white/10 px-1 py-0.2 rounded bg-white/5">↵</kbd> select</span>
+          <span className="ml-auto"><kbd className="font-mono font-medium text-slate-300 border border-white/10 px-1 py-0.2 rounded bg-white/5">Ctrl K</kbd> toggle</span>
         </div>
       </div>
     </div>

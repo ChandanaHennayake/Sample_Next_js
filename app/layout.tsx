@@ -121,7 +121,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="bg-[#0F1117] text-slate-100 antialiased font-sans">
+      <body className="bg-[#090B11] text-slate-100 antialiased font-sans selection:bg-indigo-500/30 selection:text-indigo-200 min-h-screen relative overflow-x-hidden">
+        {/* Atmospheric Aurora Lighting Layers */}
+        <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[550px] bg-gradient-to-b from-indigo-500/15 via-violet-500/10 to-transparent blur-[130px] rounded-full" />
+          <div className="absolute top-[35%] -left-48 w-[650px] h-[650px] bg-cyan-500/6 blur-[150px] rounded-full" />
+          <div className="absolute top-[65%] -right-48 w-[650px] h-[650px] bg-indigo-500/6 blur-[150px] rounded-full" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        </div>
+
         <ToastProvider>
           <Header />
 

@@ -26,14 +26,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-white/[0.08] bg-[#0A0C12] mt-24">
-      <div className="max-w-6xl mx-auto px-6 py-14">
+    <footer className="border-t border-white/[0.08] bg-[#07090E] mt-24 relative overflow-hidden">
+      {/* Subtle top edge glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand Info */}
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4 group">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -42,28 +45,35 @@ export default function Footer() {
                   />
                 </svg>
               </div>
-              <span className="text-white font-bold text-lg tracking-tight">UnitNov</span>
+              <span className="text-white font-extrabold text-lg tracking-tight">UnitNov</span>
             </Link>
-            <p className="text-slate-400 text-xs leading-relaxed mb-4">
-              Free, fast, and privacy-conscious online tools, calculators, and converters. All calculations execute instantly in your browser.
+            <p className="text-slate-400 text-xs leading-relaxed mb-5">
+              High-speed, precision online calculators, converters, and developer utilities. 100% private and executed entirely in your browser.
             </p>
-            <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              100% Client-Side Privacy
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400" />
+                100% Client-Side Privacy
+              </div>
+              <div className="flex items-center gap-2 text-xs text-indigo-300 font-medium">
+                <span className="text-indigo-400">⚡</span>
+                Zero Latency Computing
+              </div>
             </div>
           </div>
 
           {/* Popular Tools */}
           <div>
-            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">
-              Popular Tools
+            <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4">
+              Calculators
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {toolLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-xs text-slate-400 hover:text-indigo-400 transition-colors"
+                    className="text-xs text-slate-400 hover:text-indigo-300 transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -72,17 +82,37 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Categories */}
+          {/* Generators & Converters */}
           <div>
-            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">
-              Categories
+            <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4">
+              Utilities & Hubs
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/generators/qr-code-generator" className="text-xs text-slate-400 hover:text-indigo-300 transition-colors">
+                  QR Code Generator
+                </Link>
+              </li>
+              <li>
+                <Link href="/generators/password-generator" className="text-xs text-slate-400 hover:text-indigo-300 transition-colors">
+                  Password Generator
+                </Link>
+              </li>
+              <li>
+                <Link href="/generators/word-counter" className="text-xs text-slate-400 hover:text-indigo-300 transition-colors">
+                  Word Counter
+                </Link>
+              </li>
+              <li>
+                <Link href="/converters/case-converter" className="text-xs text-slate-400 hover:text-indigo-300 transition-colors">
+                  Text Case Converter
+                </Link>
+              </li>
               {categoryLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-xs text-slate-400 hover:text-indigo-400 transition-colors"
+                    className="text-xs text-slate-400 hover:text-indigo-300 transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -93,15 +123,15 @@ export default function Footer() {
 
           {/* Legal & Company */}
           <div>
-            <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">
+            <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4">
               Trust & Legal
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {legalLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-xs text-slate-400 hover:text-indigo-400 transition-colors"
+                    className="text-xs text-slate-400 hover:text-indigo-300 transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -112,15 +142,17 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/[0.06] mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="border-t border-white/[0.06] mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} UnitNov. All rights reserved.</p>
-          <p className="text-center md:text-right text-[11px] text-slate-500">
-            For educational and informational purposes only. See our{" "}
-            <Link href="/disclaimer" className="text-slate-400 hover:underline">
-              Disclaimer
-            </Link>
-            .
-          </p>
+          <div className="flex items-center gap-6">
+            <span className="text-[11px] text-slate-400">
+              For informational purposes only. See our{" "}
+              <Link href="/disclaimer" className="text-indigo-400 hover:underline">
+                Disclaimer
+              </Link>
+              .
+            </span>
+          </div>
         </div>
       </div>
     </footer>

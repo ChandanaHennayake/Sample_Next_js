@@ -66,7 +66,7 @@ Calculated at https://unitnov.com/calculators/loan-calculator`;
   const yearPresets = [1, 3, 5, 7, 10];
 
   return (
-    <div className="bg-[#151926] border border-white/[0.08] rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/20">
+    <div className="glass-card rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Inputs Column */}
         <div className="lg:col-span-7 space-y-6">
@@ -179,12 +179,15 @@ Calculated at https://unitnov.com/calculators/loan-calculator`;
         </div>
 
         {/* Right Results Column */}
-        <div className="lg:col-span-5 bg-[#1B2032] border border-white/[0.08] rounded-2xl p-6 flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-gradient-to-b from-[#181D2E] to-[#111422] border border-indigo-500/30 rounded-2xl p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+          {/* Ambient top light inside result card */}
+          <div className="absolute top-0 right-0 w-44 h-44 bg-gradient-to-bl from-indigo-500/15 via-violet-500/10 to-transparent blur-2xl pointer-events-none" />
+
           <div>
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-400">
               Estimated Monthly Payment
             </span>
-            <div className="text-4xl md:text-5xl font-black text-white tracking-tight mt-1 mb-4 tabular-nums">
+            <div className="text-4xl md:text-5xl font-black text-white tracking-tight mt-1 mb-5 tabular-nums">
               ${calculation.monthlyPayment.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               <span className="text-sm font-normal text-slate-400 ml-1">/mo</span>
             </div>
