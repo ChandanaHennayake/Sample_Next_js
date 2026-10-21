@@ -8,7 +8,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Compound Interest Calculator - Investment Growth & APY | UnitNov",
+  title: "Compound Interest Calculator: Growth & APY | UnitNov",
   description:
     "Calculate compound interest and projected investment growth with monthly contributions. Free, fast financial forecasting tool for savings and retirement.",
   keywords: [
@@ -53,27 +53,42 @@ export default function CompoundInterestCalculatorPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Compound Interest Calculator",
-    applicationCategory: "FinanceApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Compound Interest Calculator",
+      url: "https://unitnov.com/calculators/compound-interest-calculator",
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online calculator to forecast investment growth, compound returns, and future wealth with recurring contributions.",
     },
-    description:
-      "Free online calculator to forecast investment growth, compound returns, and future wealth with recurring contributions.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -146,6 +161,24 @@ export default function CompoundInterestCalculatorPage() {
               n is compounding frequency per year; t is total years invested.
             </div>
           </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Compound Interest Example
+          </h2>
+          <p className="mb-3">
+            Suppose you invest <strong>$10,000</strong> at an <strong>8% annual interest rate</strong>, compounded <strong>monthly (12 times per year)</strong> for <strong>10 years</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+            <li><strong>Identify variables:</strong> P = $10,000, r = 0.08, n = 12, t = 10 years (total n × t = 120 compounding cycles).</li>
+            <li><strong>Calculate periodic rate:</strong> r / n = 0.08 / 12 ≈ <code>0.006667</code>.</li>
+            <li><strong>Compute growth base:</strong> 1 + 0.006667 = <code>1.006667</code>.</li>
+            <li><strong>Apply exponent:</strong> (1.006667)¹²⁰ ≈ <code>2.21964</code>.</li>
+            <li><strong>Calculate future value:</strong> $10,000 × 2.21964 = <strong>$22,196.40 final balance</strong>.</li>
+            <li><strong>Total interest earned:</strong> $22,196.40 – $10,000 = <strong>$12,196.40 in compound growth</strong> (more than doubling your money!).</li>
+          </ol>
         </section>
 
         {/* Second Ad Slot */}

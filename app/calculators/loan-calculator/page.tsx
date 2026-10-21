@@ -8,7 +8,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Loan Calculator - Monthly Payment & Total Interest | UnitNov",
+  title: "Loan Calculator - Monthly Payments & Interest | UnitNov",
   description:
     "Calculate monthly loan payments, total interest, and total repayment costs. Free, fast personal loan and auto loan calculator with amortization breakdown.",
   keywords: [
@@ -53,27 +53,42 @@ export default function LoanCalculatorPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Loan Calculator",
-    applicationCategory: "FinanceApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Loan Calculator",
+      url: "https://unitnov.com/calculators/loan-calculator",
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online tool to calculate monthly installment payments and total interest costs for any personal, auto, or business loan.",
     },
-    description:
-      "Free online tool to calculate monthly installment payments and total interest costs for any personal, auto, or business loan.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}

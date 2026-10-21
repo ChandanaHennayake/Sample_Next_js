@@ -247,6 +247,7 @@ export default function DateCalculatorClient() {
               <input
                 id="daysCountInput"
                 type="number"
+                inputMode="numeric"
                 min={1}
                 max={10000}
                 value={daysCount}

@@ -92,15 +92,27 @@ Calculated at https://unitnov.com/calculators/mortgage-calculator`;
           {/* Home Price */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="homePrice" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label htmlFor="homePriceInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Home Price ($)
               </label>
-              <span className="text-lg font-bold text-white tabular-nums">
-                ${homePrice.toLocaleString()}
-              </span>
+              <div className="flex items-center gap-1">
+                <span className="text-slate-400 text-sm font-semibold">$</span>
+                <input
+                  id="homePriceInput"
+                  type="number"
+                  inputMode="decimal"
+                  min={50000}
+                  max={5000000}
+                  step={5000}
+                  value={homePrice}
+                  onChange={(e) => setHomePrice(Math.max(0, Number(e.target.value)))}
+                  className="w-28 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                />
+              </div>
             </div>
             <input
               id="homePrice"
+              aria-label="Home Price Slider"
               type="range"
               min={100000}
               max={1500000}
@@ -152,11 +164,13 @@ Calculated at https://unitnov.com/calculators/mortgage-calculator`;
 
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="interestRate" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <label htmlFor="interestRateInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                   Interest Rate (%)
                 </label>
                 <input
+                  id="interestRateInput"
                   type="number"
+                  inputMode="decimal"
                   step="0.05"
                   min="1"
                   max="20"
@@ -167,6 +181,7 @@ Calculated at https://unitnov.com/calculators/mortgage-calculator`;
               </div>
               <input
                 id="interestRate"
+                aria-label="Interest Rate Slider"
                 type="range"
                 min={2}
                 max={12}
@@ -221,18 +236,26 @@ Calculated at https://unitnov.com/calculators/mortgage-calculator`;
             {includeTaxes && (
               <div className="grid grid-cols-2 gap-3 mt-3">
                 <div>
-                  <span className="text-[10px] text-slate-400 block mb-1">Annual Property Tax ($)</span>
+                  <label htmlFor="annualPropertyTax" className="text-[10px] text-slate-400 block mb-1">
+                    Annual Property Tax ($)
+                  </label>
                   <input
+                    id="annualPropertyTax"
                     type="number"
+                    inputMode="decimal"
                     value={annualPropertyTax}
                     onChange={(e) => setAnnualPropertyTax(Math.max(0, Number(e.target.value)))}
                     className="w-full bg-[#1B2032] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block mb-1">Annual Insurance ($)</span>
+                  <label htmlFor="annualInsurance" className="text-[10px] text-slate-400 block mb-1">
+                    Annual Insurance ($)
+                  </label>
                   <input
+                    id="annualInsurance"
                     type="number"
+                    inputMode="decimal"
                     value={annualInsurance}
                     onChange={(e) => setAnnualInsurance(Math.max(0, Number(e.target.value)))}
                     className="w-full bg-[#1B2032] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:border-indigo-500"

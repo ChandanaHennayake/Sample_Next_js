@@ -52,27 +52,42 @@ export default function UnitConverterPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Unit Converter",
-    applicationCategory: "UtilitiesApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Unit Converter",
+      url: "https://unitnov.com/calculators/unit-converter",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online converter for length, weight, volume, speed, and temperature between metric and imperial standards.",
     },
-    description:
-      "Free online converter for length, weight, volume, speed, and temperature between metric and imperial standards.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -135,6 +150,36 @@ export default function UnitConverterPage() {
               <p className="text-slate-400">1 liter = 33.814 fl oz</p>
               <p className="text-slate-400">1 US gal = 3.78541 L</p>
               <p className="text-slate-400">1 cup = 236.588 mL</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Unit Conversion Examples
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div className="space-y-3">
+              <h3 className="text-base font-bold text-indigo-400">Kilograms to Pounds (kg to lbs)</h3>
+              <p className="text-slate-400">
+                To convert <strong>75 kilograms</strong> to imperial pounds:
+              </p>
+              <ol className="list-decimal pl-5 space-y-1.5 text-slate-400 text-xs md:text-sm">
+                <li>Identify conversion factor: 1 kg = <code>2.20462262 lbs</code>.</li>
+                <li>Multiply: 75 × 2.20462262 = <strong>165.35 lbs</strong>.</li>
+              </ol>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-base font-bold text-indigo-400">Celsius to Fahrenheit (°C to °F)</h3>
+              <p className="text-slate-400">
+                To convert room temperature <strong>22°C</strong> to Fahrenheit:
+              </p>
+              <ol className="list-decimal pl-5 space-y-1.5 text-slate-400 text-xs md:text-sm">
+                <li>Multiply by 9/5: 22 × 1.8 = <code>39.6</code>.</li>
+                <li>Add offset of 32: 39.6 + 32 = <strong>71.6°F</strong>.</li>
+              </ol>
             </div>
           </div>
         </section>

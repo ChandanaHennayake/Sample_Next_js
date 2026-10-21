@@ -9,7 +9,7 @@ import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 export const metadata: Metadata = {
   title: "Discount Calculator - Sale Price & Total Savings | UnitNov",
   description:
-    "Calculate sale prices, percentage discounts, and dollar savings instantly. Free online discount calculator with optional sales tax calculations for smart shopping.",
+    "Calculate sale prices, percentage discounts, and dollar savings instantly. Free online discount calculator with sales tax options for smart shopping.",
   keywords: [
     "discount calculator",
     "sale price calculator",
@@ -45,29 +45,49 @@ export default function DiscountCalculatorPage() {
       answer:
         "25% off $100 saves you $25.00, resulting in a final sale price of $75.00 before any applicable taxes.",
     },
+    {
+      question: "How do you calculate stacked or double discounts?",
+      answer:
+        "Stacked discounts are applied sequentially rather than added together. For example, 20% off an $100 item brings it to $80. An additional 10% off is then taken from the $80, saving another $8 for a final price of $72 (a total 28% discount, not 30%).",
+    },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Discount Calculator",
-    applicationCategory: "ShoppingApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Discount Calculator",
+      url: "https://unitnov.com/calculators/discount-calculator",
+      applicationCategory: "ShoppingApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online discount calculator to find discounted prices, sales savings, and post-tax checkout totals.",
     },
-    description:
-      "Free online discount calculator to find discounted prices, sales savings, and post-tax checkout totals.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -127,6 +147,22 @@ export default function DiscountCalculatorPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Discount & Sales Tax Example
+          </h2>
+          <p className="mb-3">
+            Suppose you find a designer jacket with an original retail price of <strong>$150.00</strong> on sale for <strong>35% off</strong> with an <strong>8% local sales tax rate</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+            <li><strong>Calculate discount savings:</strong> $150.00 × (35 ÷ 100) = <strong>$52.50 saved</strong>.</li>
+            <li><strong>Calculate discounted subtotal:</strong> $150.00 – $52.50 = <strong>$97.50 subtotal</strong>.</li>
+            <li><strong>Calculate sales tax:</strong> $97.50 × (8 ÷ 100) = <strong>$7.80 sales tax</strong>.</li>
+            <li><strong>Calculate final checkout price:</strong> $97.50 + $7.80 = <strong>$105.30 total out-of-pocket</strong>.</li>
+          </ol>
         </section>
 
         {/* Second Ad Slot */}

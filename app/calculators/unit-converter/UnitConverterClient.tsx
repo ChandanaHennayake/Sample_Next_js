@@ -163,11 +163,18 @@ export default function UnitConverterClient() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-center">
           {/* From Side */}
           <div className="md:col-span-2 space-y-2">
-            <label htmlFor="fromUnitSelect" className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
-              From
-            </label>
+            <div className="flex items-center justify-between">
+              <label htmlFor="fromValueInput" className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                From Value
+              </label>
+              <label htmlFor="fromUnitSelect" className="block text-[10px] text-slate-400">
+                Unit
+              </label>
+            </div>
             <input
+              id="fromValueInput"
               type="number"
+              inputMode="decimal"
               value={inputValue}
               onChange={(e) => setInputValue(Number(e.target.value))}
               className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"

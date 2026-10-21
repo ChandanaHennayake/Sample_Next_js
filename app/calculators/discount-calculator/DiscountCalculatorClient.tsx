@@ -66,6 +66,7 @@ Calculated at https://unitnov.com/calculators/discount-calculator`;
             <input
               id="originalPrice"
               type="number"
+              inputMode="decimal"
               min={1}
               step="any"
               value={originalPrice}
@@ -86,6 +87,7 @@ Calculated at https://unitnov.com/calculators/discount-calculator`;
             </div>
             <input
               id="discountPercent"
+              aria-label="Discount Percentage Slider"
               type="range"
               min={0}
               max={95}
@@ -126,6 +128,7 @@ Calculated at https://unitnov.com/calculators/discount-calculator`;
             <input
               id="salesTax"
               type="number"
+              inputMode="decimal"
               min={0}
               max={25}
               step={0.25}

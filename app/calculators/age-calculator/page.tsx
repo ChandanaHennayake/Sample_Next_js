@@ -7,7 +7,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Age Calculator - Exact Chronological Age & Birthday Countdown | UnitNov",
+  title: "Age Calculator: Chronological Age & Birthday | UnitNov",
   description:
     "Calculate your exact age in years, months, weeks, days, hours, and minutes. Free chronological age calculator with birthday countdown and leap year precision.",
   keywords: [
@@ -46,29 +46,49 @@ export default function AgeCalculatorPage() {
       answer:
         "By default, UnitNov calculates age relative to today's date. If you need to find the duration between two specific historical dates, you can also use our Date Calculator.",
     },
+    {
+      question: "How many total days and hours have I lived?",
+      answer:
+        "Our calculator computes your exact timestamp difference from your birth date to the current minute in UTC, multiplying total days by 24 hours to give your cumulative lifetime hours, minutes, and weeks lived.",
+    },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Age Calculator",
-    applicationCategory: "UtilitiesApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Age Calculator",
+      url: "https://unitnov.com/calculators/age-calculator",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online tool to calculate exact age in years, months, days, weeks, and total hours lived with birthday countdown.",
     },
-    description:
-      "Free online tool to calculate exact age in years, months, days, weeks, and total hours lived with birthday countdown.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -125,6 +145,23 @@ export default function AgeCalculatorPage() {
               Computed by taking the millisecond timestamp difference and dividing by 3,600,000 milliseconds per hour.
             </div>
           </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Chronological Age Calculation Example
+          </h2>
+          <p className="mb-3">
+            Suppose a person was born on <strong>May 15, 1998</strong>, and the current calendar date is <strong>October 21, 2026</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+            <li><strong>Calculate years:</strong> 2026 – 1998 = 28 years (since October is past May).</li>
+            <li><strong>Calculate months:</strong> 10 (October) – 5 (May) = 5 months.</li>
+            <li><strong>Calculate days:</strong> 21 (current day) – 15 (birth day) = 6 days.</li>
+            <li><strong>Combined chronological age:</strong> Exactly <strong>28 years, 5 months, and 6 days</strong>.</li>
+            <li><strong>Cumulative days lived:</strong> Accounting for all standard years and 7 leap years (2000, 2004, 2008, 2012, 2016, 2020, 2024), total days lived = <strong>10,386 days (≈ 249,264 hours)</strong>.</li>
+          </ol>
         </section>
 
         {/* Second Ad Slot */}

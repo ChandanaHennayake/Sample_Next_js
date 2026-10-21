@@ -73,15 +73,27 @@ Calculated at https://unitnov.com/calculators/loan-calculator`;
           {/* Loan Amount */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="loanAmount" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label htmlFor="loanAmountInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Loan Amount ($)
               </label>
-              <span className="text-lg font-bold text-white tabular-nums">
-                ${loanAmount.toLocaleString()}
-              </span>
+              <div className="flex items-center gap-1">
+                <span className="text-slate-400 text-sm font-semibold">$</span>
+                <input
+                  id="loanAmountInput"
+                  type="number"
+                  inputMode="decimal"
+                  min={500}
+                  max={1000000}
+                  step={500}
+                  value={loanAmount}
+                  onChange={(e) => setLoanAmount(Math.max(0, Number(e.target.value)))}
+                  className="w-28 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                />
+              </div>
             </div>
             <input
               id="loanAmount"
+              aria-label="Loan Amount Slider"
               type="range"
               min={1000}
               max={250000}
@@ -111,12 +123,14 @@ Calculated at https://unitnov.com/calculators/loan-calculator`;
           {/* Interest Rate */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="interestRate" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label htmlFor="interestRateInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Annual Interest Rate (%)
               </label>
               <div className="flex items-center gap-1">
                 <input
+                  id="interestRateInput"
                   type="number"
+                  inputMode="decimal"
                   step="0.1"
                   min="0.1"
                   max="35"

@@ -88,15 +88,27 @@ Calculated free at https://unitnov.com/calculators/compound-interest-calculator`
           {/* Initial Deposit */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="initialDeposit" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label htmlFor="initialDepositInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Initial Deposit ($)
               </label>
-              <span className="text-lg font-bold text-white tabular-nums">
-                ${initialDeposit.toLocaleString()}
-              </span>
+              <div className="flex items-center gap-1">
+                <span className="text-slate-400 text-sm font-semibold">$</span>
+                <input
+                  id="initialDepositInput"
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  max={10000000}
+                  step={500}
+                  value={initialDeposit}
+                  onChange={(e) => setInitialDeposit(Math.max(0, Number(e.target.value)))}
+                  className="w-28 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                />
+              </div>
             </div>
             <input
               id="initialDeposit"
+              aria-label="Initial Deposit Slider"
               type="range"
               min={0}
               max={100000}
@@ -126,15 +138,28 @@ Calculated free at https://unitnov.com/calculators/compound-interest-calculator`
           {/* Monthly Contribution */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label htmlFor="monthlyContribution" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label htmlFor="monthlyContributionInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Monthly Contribution ($)
               </label>
-              <span className="text-base font-bold text-white tabular-nums">
-                ${monthlyContribution.toLocaleString()}/mo
-              </span>
+              <div className="flex items-center gap-1">
+                <span className="text-slate-400 text-sm font-semibold">$</span>
+                <input
+                  id="monthlyContributionInput"
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  max={50000}
+                  step={25}
+                  value={monthlyContribution}
+                  onChange={(e) => setMonthlyContribution(Math.max(0, Number(e.target.value)))}
+                  className="w-24 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                />
+                <span className="text-slate-400 text-xs">/mo</span>
+              </div>
             </div>
             <input
               id="monthlyContribution"
+              aria-label="Monthly Contribution Slider"
               type="range"
               min={0}
               max={5000}
@@ -149,13 +174,27 @@ Calculated free at https://unitnov.com/calculators/compound-interest-calculator`
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="annualRate" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <label htmlFor="annualRateInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                   Annual Return (%)
                 </label>
-                <span className="text-sm font-semibold text-white">{annualRate}%</span>
+                <div className="flex items-center gap-1">
+                  <input
+                    id="annualRateInput"
+                    type="number"
+                    inputMode="decimal"
+                    step="0.1"
+                    min="0.1"
+                    max="50"
+                    value={annualRate}
+                    onChange={(e) => setAnnualRate(Math.max(0.1, Number(e.target.value)))}
+                    className="w-16 bg-[#22263A] border border-white/10 rounded-lg px-2 py-0.5 text-xs font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                  />
+                  <span className="text-slate-400 text-xs">%</span>
+                </div>
               </div>
               <input
                 id="annualRate"
+                aria-label="Annual Return Slider"
                 type="range"
                 min={1}
                 max={20}

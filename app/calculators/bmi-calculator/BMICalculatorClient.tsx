@@ -138,15 +138,26 @@ Calculated free at https://unitnov.com/calculators/bmi-calculator`;
               {/* Height in cm */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="heightCm" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  <label htmlFor="heightCmInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                     Height (cm)
                   </label>
-                  <span className="text-lg font-bold text-white tabular-nums">
-                    {heightCm} cm ({(heightCm / 100).toFixed(2)} m)
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      id="heightCmInput"
+                      type="number"
+                      inputMode="decimal"
+                      min={100}
+                      max={250}
+                      value={heightCm}
+                      onChange={(e) => setHeightCm(Math.max(50, Number(e.target.value)))}
+                      className="w-20 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                    />
+                    <span className="text-slate-400 text-xs">cm</span>
+                  </div>
                 </div>
                 <input
                   id="heightCm"
+                  aria-label="Height in centimeters slider"
                   type="range"
                   min={120}
                   max={230}
@@ -159,15 +170,26 @@ Calculated free at https://unitnov.com/calculators/bmi-calculator`;
               {/* Weight in kg */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="weightKg" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  <label htmlFor="weightKgInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                     Weight (kg)
                   </label>
-                  <span className="text-lg font-bold text-white tabular-nums">
-                    {weightKg} kg ({(weightKg * 2.20462).toFixed(1)} lbs)
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      id="weightKgInput"
+                      type="number"
+                      inputMode="decimal"
+                      min={30}
+                      max={300}
+                      value={weightKg}
+                      onChange={(e) => setWeightKg(Math.max(10, Number(e.target.value)))}
+                      className="w-20 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                    />
+                    <span className="text-slate-400 text-xs">kg</span>
+                  </div>
                 </div>
                 <input
                   id="weightKg"
+                  aria-label="Weight in kilograms slider"
                   type="range"
                   min={35}
                   max={180}
@@ -181,13 +203,16 @@ Calculated free at https://unitnov.com/calculators/bmi-calculator`;
             <>
               {/* Height in feet and inches */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                <span className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
                   Height (Feet & Inches)
-                </label>
+                </span>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <span className="text-[10px] text-slate-400 block mb-1">Feet</span>
+                    <label htmlFor="heightFeetSelect" className="text-[10px] text-slate-400 block mb-1">
+                      Feet
+                    </label>
                     <select
+                      id="heightFeetSelect"
                       value={heightFeet}
                       onChange={(e) => setHeightFeet(Number(e.target.value))}
                       className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-3 py-2 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500"
@@ -200,8 +225,11 @@ Calculated free at https://unitnov.com/calculators/bmi-calculator`;
                     </select>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block mb-1">Inches</span>
+                    <label htmlFor="heightInchesSelect" className="text-[10px] text-slate-400 block mb-1">
+                      Inches
+                    </label>
                     <select
+                      id="heightInchesSelect"
                       value={heightInches}
                       onChange={(e) => setHeightInches(Number(e.target.value))}
                       className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-3 py-2 text-sm font-semibold text-white focus:outline-none focus:border-indigo-500"
@@ -219,15 +247,26 @@ Calculated free at https://unitnov.com/calculators/bmi-calculator`;
               {/* Weight in lbs */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="weightLbs" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  <label htmlFor="weightLbsInput" className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                     Weight (lbs)
                   </label>
-                  <span className="text-lg font-bold text-white tabular-nums">
-                    {weightLbs} lbs ({(weightLbs * 0.453592).toFixed(1)} kg)
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <input
+                      id="weightLbsInput"
+                      type="number"
+                      inputMode="decimal"
+                      min={60}
+                      max={600}
+                      value={weightLbs}
+                      onChange={(e) => setWeightLbs(Math.max(20, Number(e.target.value)))}
+                      className="w-20 bg-[#22263A] border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-white text-right focus:outline-none focus:border-indigo-500"
+                    />
+                    <span className="text-slate-400 text-xs">lbs</span>
+                  </div>
                 </div>
                 <input
                   id="weightLbs"
+                  aria-label="Weight in pounds slider"
                   type="range"
                   min={80}
                   max={400}

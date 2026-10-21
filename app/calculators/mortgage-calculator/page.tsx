@@ -8,7 +8,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Mortgage Calculator - Monthly Payment & Amortization | UnitNov",
+  title: "Mortgage Calculator: Monthly Payments & PITI | UnitNov",
   description:
     "Free online mortgage calculator. Estimate monthly house payments including principal, interest, property taxes, and homeowners insurance.",
   keywords: [
@@ -54,27 +54,42 @@ export default function MortgageCalculatorPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Mortgage Calculator",
-    applicationCategory: "FinanceApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Mortgage Calculator",
+      url: "https://unitnov.com/calculators/mortgage-calculator",
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online mortgage calculator to estimate monthly payments, property taxes, homeowners insurance, and lifetime interest.",
     },
-    description:
-      "Free online mortgage calculator to estimate monthly payments, property taxes, homeowners insurance, and lifetime interest.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -143,6 +158,23 @@ export default function MortgageCalculatorPage() {
               Loan term in years × 12 months (e.g., 30 years × 12 = 360 payments).
             </div>
           </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Mortgage Calculation Example
+          </h2>
+          <p className="mb-3">
+            Suppose you purchase a <strong>$400,000</strong> home with a <strong>20% down payment ($80,000)</strong> at a <strong>6.75% fixed interest rate</strong> on a <strong>30-year term (360 months)</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+            <li><strong>Determine loan balance:</strong> $400,000 – $80,000 = <strong>$320,000 principal</strong>.</li>
+            <li><strong>Convert monthly rate:</strong> 6.75% ÷ 100 ÷ 12 = <code>0.005625</code>.</li>
+            <li><strong>Compute compound factor:</strong> (1 + 0.005625)³⁶⁰ ≈ <code>7.5255</code>.</li>
+            <li><strong>Calculate principal & interest:</strong> 320,000 × [0.005625 × 7.5255] / [7.5255 – 1] = <strong>$2,075.64 / month</strong>.</li>
+            <li><strong>Add escrow (taxes & insurance):</strong> $350/mo property tax + $116.67/mo homeowners insurance = <strong>$2,542.31 total monthly payment (PITI)</strong>.</li>
+          </ol>
         </section>
 
         {/* Second Ad Slot */}

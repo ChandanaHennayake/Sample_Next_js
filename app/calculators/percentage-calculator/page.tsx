@@ -7,7 +7,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Percentage Calculator - Find Percentage, Increase & Decrease | UnitNov",
+  title: "Percentage Calculator: Increase, Decrease & Change | UnitNov",
   description:
     "Free online percentage calculator. Quickly calculate what is X% of Y, find percentage proportions, and calculate percentage increase or decrease.",
   keywords: [
@@ -45,29 +45,49 @@ export default function PercentageCalculatorPage() {
       answer:
         "To find what percentage X is of Y: divide X by Y, then multiply by 100. For example, 25 out of 200 is (25 ÷ 200) × 100 = 0.125 × 100 = 12.5%.",
     },
+    {
+      question: "How do you calculate reverse percentage (original value)?",
+      answer:
+        "To find the original number before a percentage increase, divide the final amount by (1 + percentage/100). For a percentage discount, divide the final sale price by (1 – percentage/100). For example, if an item costs $80 after a 20% discount, original = $80 / 0.80 = $100.",
+    },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Percentage Calculator",
-    applicationCategory: "EducationalApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Percentage Calculator",
+      url: "https://unitnov.com/calculators/percentage-calculator",
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online percentage calculator to solve percentages, proportions, discounts, and percentage change.",
     },
-    description:
-      "Free online percentage calculator to solve percentages, proportions, discounts, and percentage change.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -131,6 +151,22 @@ export default function PercentageCalculatorPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Percentage Calculation Example
+          </h2>
+          <p className="mb-3">
+            Suppose an investment or asset increases in value from an initial price of <strong>$50.00</strong> to a new price of <strong>$75.00</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+            <li><strong>Find the absolute difference:</strong> $75.00 – $50.00 = <strong>+$25.00 increase</strong>.</li>
+            <li><strong>Divide by initial value:</strong> $25.00 ÷ $50.00 = <code>0.50</code>.</li>
+            <li><strong>Convert to percentage:</strong> 0.50 × 100% = <strong>+50% percentage increase</strong>.</li>
+            <li><strong>Reverse check:</strong> $50.00 × 1.50 = $75.00 (confirmed mathematically).</li>
+          </ol>
         </section>
 
         {/* Second Ad Slot */}

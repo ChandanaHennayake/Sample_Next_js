@@ -87,6 +87,7 @@ export default function PercentageCalculatorClient() {
               <input
                 id="m1Percent"
                 type="number"
+                inputMode="decimal"
                 value={m1Percent}
                 onChange={(e) => setM1Percent(Number(e.target.value))}
                 className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"
@@ -99,6 +100,7 @@ export default function PercentageCalculatorClient() {
               <input
                 id="m1Value"
                 type="number"
+                inputMode="decimal"
                 value={m1Value}
                 onChange={(e) => setM1Value(Number(e.target.value))}
                 className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"
@@ -139,6 +141,7 @@ export default function PercentageCalculatorClient() {
               <input
                 id="m2Part"
                 type="number"
+                inputMode="decimal"
                 value={m2Part}
                 onChange={(e) => setM2Part(Number(e.target.value))}
                 className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"
@@ -151,6 +154,7 @@ export default function PercentageCalculatorClient() {
               <input
                 id="m2Whole"
                 type="number"
+                inputMode="decimal"
                 value={m2Whole}
                 onChange={(e) => setM2Whole(Number(e.target.value))}
                 className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"
@@ -191,6 +195,7 @@ export default function PercentageCalculatorClient() {
               <input
                 id="m3Initial"
                 type="number"
+                inputMode="decimal"
                 value={m3Initial}
                 onChange={(e) => setM3Initial(Number(e.target.value))}
                 className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"
@@ -203,6 +208,7 @@ export default function PercentageCalculatorClient() {
               <input
                 id="m3Final"
                 type="number"
+                inputMode="decimal"
                 value={m3Final}
                 onChange={(e) => setM3Final(Number(e.target.value))}
                 className="w-full bg-[#1B2032] border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-indigo-500"

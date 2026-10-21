@@ -7,7 +7,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "Date Calculator - Days Between Dates & Business Days | UnitNov",
+  title: "Date Calculator: Days Between Dates & Workdays | UnitNov",
   description:
     "Calculate the exact number of days, weeks, and business days between two dates. Add or subtract days from any date with our free online calendar tool.",
   keywords: [
@@ -45,29 +45,49 @@ export default function DateCalculatorPage() {
       answer:
         "All calculations use full Gregorian calendar math that automatically accounts for February 29th leap days across past, present, and future centuries.",
     },
+    {
+      question: "How do I calculate what date is 90 days from today?",
+      answer:
+        "In the 'Add / Subtract Days' mode of our calculator, select today as your start date, ensure the operation is set to Add (+), and enter 90. UnitNov will compute the exact future calendar day, taking into account differing month day-counts and leap years.",
+    },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Date Calculator",
-    applicationCategory: "UtilitiesApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Date Calculator",
+      url: "https://unitnov.com/calculators/date-calculator",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online date calculator to compute days between dates, working business days, and add or subtract days.",
     },
-    description:
-      "Free online date calculator to compute days between dates, working business days, and add or subtract days.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & Schema */}
@@ -120,6 +140,22 @@ export default function DateCalculatorPage() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Date & Business Day Example
+          </h2>
+          <p className="mb-3">
+            Suppose a commercial contract commences on <strong>September 1, 2026</strong> and completes on <strong>October 15, 2026</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+            <li><strong>Count total calendar days:</strong> 30 days in September – 1 + 15 days in October = <strong>44 total calendar days (6 weeks and 2 days)</strong>.</li>
+            <li><strong>Filter weekends:</strong> September 1 to October 15 contains 6 full weekends (12 weekend days).</li>
+            <li><strong>Compute working business days:</strong> 44 total days – 12 weekend days = <strong>32 Monday-through-Friday business working days</strong>.</li>
+            <li><strong>Project billing deadline (Net 30):</strong> Adding 30 days from September 1 yields an invoice due date of <strong>Thursday, October 1, 2026</strong>.</li>
+          </ol>
         </section>
 
         {/* Second Ad Slot */}

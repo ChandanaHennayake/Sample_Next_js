@@ -7,7 +7,7 @@ import Breadcrumb from "@/src/components/Breadcrumb";
 import FAQAccordion, { FAQItem } from "@/src/components/FAQAccordion";
 
 export const metadata: Metadata = {
-  title: "BMI Calculator - Body Mass Index & Healthy Weight | UnitNov",
+  title: "BMI Calculator: Body Mass Index & Health | UnitNov",
   description:
     "Free online BMI calculator with Metric (cm/kg) and Imperial (feet/inches/lbs) units. Check body mass index, WHO weight categories, and healthy weight ranges.",
   keywords: [
@@ -52,27 +52,42 @@ export default function BMICalculatorPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov BMI Calculator",
-    applicationCategory: "HealthApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "BMI Calculator",
+      url: "https://unitnov.com/calculators/bmi-calculator",
+      applicationCategory: "HealthApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online Body Mass Index calculator supporting both metric and imperial measurements with healthy weight target guidance.",
     },
-    description:
-      "Free online Body Mass Index calculator supporting both metric and imperial measurements with healthy weight target guidance.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
@@ -155,6 +170,40 @@ export default function BMICalculatorPage() {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </section>
+
+        {/* Step-by-Step Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step BMI Calculation Example
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div className="space-y-3">
+              <h3 className="text-base font-bold text-indigo-400">Metric Example (kg & cm)</h3>
+              <p className="text-slate-400">
+                Consider an individual who is <strong>175 cm (1.75 m) tall</strong> and weighs <strong>70 kg</strong>:
+              </p>
+              <ol className="list-decimal pl-5 space-y-1.5 text-slate-400 text-xs md:text-sm">
+                <li>Convert height to meters: 175 cm ÷ 100 = <code>1.75 m</code>.</li>
+                <li>Square the height: 1.75 × 1.75 = <code>3.0625</code>.</li>
+                <li>Divide weight: 70 kg ÷ 3.0625 = <strong>22.86 BMI</strong>.</li>
+                <li>Result: <strong>Normal weight</strong> (within 18.5 – 24.9).</li>
+              </ol>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-base font-bold text-indigo-400">Imperial Example (lbs & inches)</h3>
+              <p className="text-slate-400">
+                Consider an individual who is <strong>5 ft 10 in (70 inches)</strong> and weighs <strong>165 lbs</strong>:
+              </p>
+              <ol className="list-decimal pl-5 space-y-1.5 text-slate-400 text-xs md:text-sm">
+                <li>Convert height to inches: (5 × 12) + 10 = <code>70 in</code>.</li>
+                <li>Square the height: 70 × 70 = <code>4,900</code>.</li>
+                <li>Compute with 703 factor: [165 ÷ 4,900] × 703 = <strong>23.67 BMI</strong>.</li>
+                <li>Result: <strong>Normal weight</strong> (within 18.5 – 24.9).</li>
+              </ol>
+            </div>
           </div>
         </section>
 
