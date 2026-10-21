@@ -53,27 +53,42 @@ export default function QRCodeGeneratorPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov QR Code Generator",
-    applicationCategory: "UtilitiesApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "UnitNov QR Code Generator",
+      url: "https://unitnov.com/generators/qr-code-generator",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free high-resolution QR code generator supporting URLs, WiFi networks, emails, and custom colors with instant PNG and SVG downloads.",
     },
-    description:
-      "Free high-resolution QR code generator supporting URLs, WiFi networks, emails, and custom colors with instant PNG and SVG downloads.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
@@ -106,8 +121,64 @@ export default function QRCodeGeneratorPage() {
       {/* Share & Export */}
       <ShareBar toolName="QR Code Generator" className="my-6" />
 
-      {/* Comprehensive Guide Section */}
+      {/* Comprehensive Guide Section & Formula Breakdown */}
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            The 10:1 Scanning Distance Ratio Formula
+          </h2>
+          <p className="mb-4">
+            To ensure reliable scanning across all camera sensors, follow the industry standard <strong>10:1 Distance-to-Size ratio</strong>:
+          </p>
+
+          <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 my-4 text-center font-mono text-indigo-300 text-base md:text-lg">
+            Minimum QR Width = Scanning Distance / 10
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 text-xs md:text-sm">
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">Handheld Print</span>
+              Business cards and menus at 20 cm scan distance require minimum <strong>2 cm × 2 cm (0.8 in)</strong>.
+            </div>
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">Store Posters</span>
+              Wall posters viewed from 1.5 meters require minimum <strong>15 cm × 15 cm (6 in)</strong>.
+            </div>
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">Outdoor Signage</span>
+              Billboards scanned from 10 meters away require minimum <strong>100 cm × 100 cm (1 meter)</strong>.
+            </div>
+          </div>
+        </section>
+
+        {/* Reed-Solomon Error Correction Guide */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Reed-Solomon Error Correction Levels
+          </h2>
+          <p className="mb-4 text-slate-400">
+            QR codes embed redundant data packets so they remain readable even if smudged, torn, or overlaid with a brand logo:
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs md:text-sm">
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-sky-400 block mb-1">Level L (Low)</span>
+              Recovers up to <strong>7%</strong> missing data. Best for dense data on screens.
+            </div>
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-emerald-400 block mb-1">Level M (Medium)</span>
+              Recovers up to <strong>15%</strong> missing data. The standard for marketing flyers.
+            </div>
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-amber-400 block mb-1">Level Q (Quartile)</span>
+              Recovers up to <strong>25%</strong> missing data. Recommended for industrial and transit prints.
+            </div>
+            <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
+              <span className="font-bold text-rose-400 block mb-1">Level H (High)</span>
+              Recovers up to <strong>30%</strong> missing data. Essential when superimposing custom logos in the center.
+            </div>
+          </div>
+        </section>
+
         <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">
             Best Practices for High-Scan-Rate QR Codes

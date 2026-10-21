@@ -47,27 +47,42 @@ export default function PasswordGeneratorPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Password Generator",
-    applicationCategory: "SecurityApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "UnitNov Password Generator",
+      url: "https://unitnov.com/generators/password-generator",
+      applicationCategory: "SecurityApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free cryptographically secure password generator to create unbreakable random passwords with custom rules and entropy analysis.",
     },
-    description:
-      "Free cryptographically secure password generator to create unbreakable random passwords with custom rules and entropy analysis.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
@@ -100,8 +115,52 @@ export default function PasswordGeneratorPage() {
       {/* Share & Export */}
       <ShareBar toolName="Password Generator" className="my-6" />
 
-      {/* Security Guide Section */}
+      {/* Security Guide Section & Entropy Formula */}
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            The Mathematics of Password Entropy
+          </h2>
+          <p className="mb-4">
+            Password strength is measured in <strong>bits of entropy</strong> ($E$), quantifying how many combinations an attacker must test to exhaustively brute-force your password:
+          </p>
+
+          <div className="bg-[#0F1117] border border-emerald-500/20 rounded-xl p-5 my-4 text-center font-mono text-emerald-300 text-base md:text-lg">
+            E = L × log₂(R)
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 text-xs md:text-sm">
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">E = Entropy (Bits)</span>
+              A rating over 80 bits is considered cryptographically secure against supercomputer clusters.
+            </div>
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">L = Password Length</span>
+              Total character length of the generated password (e.g. 16 characters).
+            </div>
+            <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
+              <span className="font-bold text-white block text-sm mb-1">R = Character Pool (Radix)</span>
+              Number of possible symbols: 26 (lower) + 26 (upper) + 10 (digits) + 32 (symbols) = 94 pool.
+            </div>
+          </div>
+        </section>
+
+        {/* Step-by-Step Entropy Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Entropy Calculation Example
+          </h2>
+          <p className="mb-3">
+            Suppose you generate a <strong>16-character password</strong> using uppercase, lowercase, numbers, and symbols:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400 text-xs md:text-sm">
+            <li><strong>Determine pool size ($R$):</strong> 26 + 26 + 10 + 32 = <code>94 possible characters</code>.</li>
+            <li><strong>Compute bits per character:</strong> log₂(94) = ln(94) / ln(2) ≈ <code>6.5545 bits</code>.</li>
+            <li><strong>Multiply by password length ($L$):</strong> 16 × 6.5545 ≈ <strong>104.87 bits of entropy</strong>.</li>
+            <li><strong>Brute force resilience:</strong> An attacker testing 100 billion combinations per second would require over <strong>1.2 × 10¹⁴ years</strong> to exhaust the search space.</li>
+          </ol>
+        </section>
+
         <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">
             How Password Entropy Protects Your Accounts

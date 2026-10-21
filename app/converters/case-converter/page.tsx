@@ -54,27 +54,42 @@ export default function CaseConverterPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Case Converter",
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "UnitNov Text Case Converter",
+      url: "https://unitnov.com/converters/case-converter",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online case converter to transform text into UPPERCASE, lowercase, Title Case, Sentence case, camelCase, kebab-case, and snake_case.",
     },
-    description:
-      "Free online case converter to transform text into UPPERCASE, lowercase, Title Case, Sentence case, camelCase, kebab-case, and snake_case.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
@@ -136,6 +151,34 @@ export default function CaseConverterPage() {
               <span className="font-bold text-violet-400">PascalCase</span>
               <p className="text-slate-400">Used for React component names, TypeScript types/interfaces, and C# classes.</p>
               <div className="font-mono text-slate-200 text-xs pt-1">e.g. `LoanCalculatorClient`</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Step-by-Step Transformation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step String Transformation Example
+          </h2>
+          <p className="mb-4">
+            Suppose you input the raw string <strong>&quot;calculate monthly interest rate&quot;</strong>:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs md:text-sm font-mono">
+            <div className="bg-[#1B2032] p-3 rounded-lg border border-white/5">
+              <span className="text-slate-400 font-sans block text-xs mb-1">UPPERCASE</span>
+              <span className="text-indigo-300 font-bold">CALCULATE MONTHLY INTEREST RATE</span>
+            </div>
+            <div className="bg-[#1B2032] p-3 rounded-lg border border-white/5">
+              <span className="text-slate-400 font-sans block text-xs mb-1">camelCase</span>
+              <span className="text-indigo-300 font-bold">calculateMonthlyInterestRate</span>
+            </div>
+            <div className="bg-[#1B2032] p-3 rounded-lg border border-white/5">
+              <span className="text-slate-400 font-sans block text-xs mb-1">kebab-case (slug)</span>
+              <span className="text-indigo-300 font-bold">calculate-monthly-interest-rate</span>
+            </div>
+            <div className="bg-[#1B2032] p-3 rounded-lg border border-white/5">
+              <span className="text-slate-400 font-sans block text-xs mb-1">snake_case</span>
+              <span className="text-indigo-300 font-bold">calculate_monthly_interest_rate</span>
             </div>
           </div>
         </section>

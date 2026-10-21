@@ -131,6 +131,10 @@ export default function AgeCalculatorPage() {
             In most western cultures, age increments by one year on each anniversary of a person&apos;s birth. However, calculating the exact number of months and days requires adjusting for the irregular number of days in each calendar month:
           </p>
 
+          <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 my-4 text-center font-mono text-indigo-300 text-xs sm:text-sm md:text-base">
+            Age = (Year_now – Year_birth) – [ if (Month_now, Day_now) &lt; (Month_birth, Day_birth) then 1 else 0 ]
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 text-xs md:text-sm">
             <div className="bg-[#1E2335] rounded-xl p-4 border border-white/5">
               <span className="font-bold text-white block text-sm mb-1">Standard Months</span>

@@ -48,27 +48,42 @@ export default function WordCounterPage() {
     },
   ];
 
-  const appSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "UnitNov Word Counter",
-    applicationCategory: "TextApplication",
-    operatingSystem: "All",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "UnitNov Word Counter",
+      url: "https://unitnov.com/generators/word-counter",
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "All",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      description:
+        "Free online word and character counter tool to calculate words, characters with/without spaces, sentences, and estimated reading time.",
     },
-    description:
-      "Free online word and character counter tool to calculate words, characters with/without spaces, sentences, and estimated reading time.",
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    },
+  ];
 
   return (
     <div className="py-4">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Semantic Breadcrumb Navigation & BreadcrumbList Schema */}
@@ -101,8 +116,44 @@ export default function WordCounterPage() {
       {/* Share & Export */}
       <ShareBar toolName="Word & Character Counter" className="my-6" />
 
-      {/* Educational Guide Section */}
+      {/* Educational Guide Section & Formulas */}
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Reading & Speaking Speed Formulas
+          </h2>
+          <p className="mb-4">
+            Reading and speaking times are calculated using empirical averages from psychological reading comprehension studies:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 font-mono text-xs md:text-sm">
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 text-center text-indigo-300">
+              <span className="font-sans font-semibold text-slate-400 block mb-2 text-xs uppercase tracking-wider">Silent Reading Time (225 WPM)</span>
+              Reading Minutes = Total Words / 225
+            </div>
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 text-center text-indigo-300">
+              <span className="font-sans font-semibold text-slate-400 block mb-2 text-xs uppercase tracking-wider">Public Speaking Time (130 WPM)</span>
+              Speech Minutes = Total Words / 130
+            </div>
+          </div>
+        </section>
+
+        {/* Worked Calculation Example */}
+        <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Step-by-Step Article Analysis Example
+          </h2>
+          <p className="mb-3">
+            Suppose you compose an in-depth blog post or academic essay containing <strong>1,800 words</strong>:
+          </p>
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400 text-xs md:text-sm">
+            <li><strong>Silent reading duration:</strong> 1,800 words ÷ 225 WPM = <strong>8.0 minutes</strong>.</li>
+            <li><strong>Public speaking duration:</strong> 1,800 words ÷ 130 WPM = <strong>13.8 minutes (≈ 13m 50s)</strong>.</li>
+            <li><strong>Character estimation:</strong> At an English average of 5.1 characters per word, 1,800 words spans approximately <strong>9,180 characters (no spaces)</strong> and <strong>10,980 total characters</strong>.</li>
+            <li><strong>Page layout estimate:</strong> Standard single-spaced A4 (500 words/page) = <strong>3.6 pages</strong>; double-spaced (250 words/page) = <strong>7.2 pages</strong>.</li>
+          </ol>
+        </section>
+
         <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">
             Standard Writing & Social Media Length Guidelines

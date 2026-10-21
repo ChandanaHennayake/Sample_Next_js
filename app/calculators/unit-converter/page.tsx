@@ -124,8 +124,30 @@ export default function UnitConverterPage() {
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
         <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">
-            Common Quick Conversion Factors
+            Fundamental Unit Conversion Formulas
           </h2>
+          <p className="mb-4">
+            Unit conversions rely on standardized multiplier factors and scale shifts defined by international measurement bodies (BIPM and NIST):
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6 font-mono text-xs md:text-sm">
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-4 text-center text-indigo-300">
+              <span className="font-sans font-semibold text-slate-400 block mb-1 text-xs">Temperature</span>
+              °F = (°C × 9/5) + 32
+            </div>
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-4 text-center text-emerald-300">
+              <span className="font-sans font-semibold text-slate-400 block mb-1 text-xs">Mass / Weight</span>
+              lbs = kg × 2.20462
+            </div>
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-4 text-center text-amber-300">
+              <span className="font-sans font-semibold text-slate-400 block mb-1 text-xs">Distance / Speed</span>
+              km = miles × 1.60934
+            </div>
+          </div>
+
+          <h3 className="text-xl font-bold text-white mb-3 mt-8">
+            Common Quick Conversion Factors
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             <div className="bg-[#1B2032] p-4 rounded-xl border border-white/5">
               <span className="font-bold text-indigo-300 block mb-1">Length</span>

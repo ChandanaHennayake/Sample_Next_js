@@ -132,8 +132,26 @@ export default function BMICalculatorPage() {
       <article className="mt-16 pt-12 border-t border-white/[0.08] space-y-10 text-slate-300 leading-relaxed text-sm md:text-base">
         <section className="bg-[#151926] border border-white/[0.08] rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">
-            World Health Organization (WHO) BMI Classifications
+            Body Mass Index (BMI) Mathematical Formulas
           </h2>
+          <p className="mb-4">
+            BMI evaluates body mass relative to height squared. Depending on whether you measure in metric units or imperial units, use the respective formula below:
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 text-center font-mono text-indigo-300">
+              <span className="text-xs uppercase tracking-wider text-slate-400 block mb-2 font-sans font-semibold">Metric Formula</span>
+              <span className="text-base md:text-lg">BMI = Weight (kg) / [ Height (m) ]²</span>
+            </div>
+            <div className="bg-[#0F1117] border border-indigo-500/20 rounded-xl p-5 text-center font-mono text-indigo-300">
+              <span className="text-xs uppercase tracking-wider text-slate-400 block mb-2 font-sans font-semibold">Imperial Formula</span>
+              <span className="text-base md:text-lg">BMI = 703 × Weight (lbs) / [ Height (in) ]²</span>
+            </div>
+          </div>
+
+          <h3 className="text-xl font-bold text-white mb-3 mt-8">
+            World Health Organization (WHO) BMI Classifications
+          </h3>
           <p className="mb-6">
             The table below shows the international BMI cutoff categories established by the World Health Organization for adults aged 20 and older:
           </p>
